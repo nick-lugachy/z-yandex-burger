@@ -1,0 +1,33 @@
+.section {
+	margin: 100px 20px 0px 20px;
+	padding: 0 16px;
+}
+
+.scrollSection {
+	max-height: 465px;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	padding: 16px 0;
+	gap: 16px;
+}
+
+.icon {
+	vertical-align: middle;
+	margin: 16px 40px 16px 8px;
+	height: 100%;
+}
+
+.largeIcon {
+	width: unset;
+	height: unset;
+	display: flex;
+	flex-grow: 1;
+}
+
+.total {
+	display: flex;
+	justify-content: flex-end;
+	vertical-align: middle;
+	margin: 24px;
+}

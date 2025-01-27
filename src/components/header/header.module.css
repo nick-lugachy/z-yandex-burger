@@ -1,0 +1,28 @@
+.header {
+	vertical-align: top;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+}
+
+.logo {
+	height: 56px;
+	vertical-align: middle;
+	flex-grow: 1;
+	margin: 16px;
+}
+
+.logo:hover {
+	filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.icon {
+	vertical-align: middle;
+	margin-right: 8px;
+}
+
+.page {
+	top: 0;
+	height: 100vh;
+}
