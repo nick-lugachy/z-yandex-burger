@@ -4,25 +4,24 @@
 }
 
 .scrollSection {
-	max-height: 465px;
+	max-height: 480px;
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 16px;
 	overflow-y: scroll;
-	padding: 16px 0;
-	gap: 16px;
+	scroll-behavior: smooth;
+	scrollbar-width: thin;
+	scroll-snap-type: y mandatory;
 }
 
+.elementContainer {
+	scroll-snap-align: start;
+	padding-top: 16px;
+}
 .icon {
 	vertical-align: middle;
 	margin: 16px 40px 16px 8px;
 	height: 100%;
-}
-
-.largeIcon {
-	width: unset;
-	height: unset;
-	display: flex;
-	flex-grow: 1;
 }
 
 .total {

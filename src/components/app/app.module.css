@@ -1,0 +1,9 @@
+.root {
+	top: 0;
+	height: 100vh;
+}
+
+.main {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}

@@ -6,6 +6,14 @@
 	width: 100%;
 }
 
+.button {
+	color: var(--text-primary-color);
+}
+
+.buttonInactive {
+	color: var(--text-inactive-color);
+}
+
 .logo {
 	height: 56px;
 	vertical-align: middle;

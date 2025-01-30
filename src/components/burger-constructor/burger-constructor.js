@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './burger-constructor.module.css';
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FinishOrderDlg } from '../burger-constructor-dlg/burger-constructor-dlg.js';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,41 +10,38 @@ import { Modal } from '../../components/modal/modal.js';
 export function BurgerConstructor(props) {
 	const [modalVisible, showModal] = useState(false);
 
-	const FinishOrderDlg = () => (
-		<>
-			<p className='text text_type_digits-large'>34567</p>
-			<p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
-			<CheckMarkIcon className={'m-15 ' + styles.largeIcon} />
-			<p className='text text_type_main-default'>Ваш заказ начали готовить</p>
-			<p className='text text_type_main-default text_color_inactive mt-2 mb-20'>
-				Дождитесь готовности на орбитальной станции
-			</p>
-		</>
-	);
-
-	if (props.data === null) return <div />;
-
-	const Element = (props) => (
-		<ConstructorElement
-			type={props.btnShape}
-			isLocked={props.type == 'bun' ? true : false}
-			text={props.name}
-			price={props.price}
-			thumbnail={props.image_mobile}
-		/>
-	);
+	if (props.bun === null) return <div />;
 
 	return (
 		<section className={styles.section}>
 			<>
-				<Element {...props.data[0]} btnShape='top' />
+				<ConstructorElement
+					type='top'
+					isLocked={true}
+					text={props.bun.name + ' (Верх)'}
+					price={props.bun.price}
+					thumbnail={props.bun.image_mobile}
+				/>
+
 				<div className={styles.scrollSection}>
-					{props.data.map(
-						(Item) =>
-							Item.type !== 'bun' && <Element key={Item._id} {...Item} />
-					)}
+					{props.ingredients.map((item) => (
+						<div key={item._id} className={styles.elementContainer}>
+							<ConstructorElement
+								text={item.name}
+								price={item.price}
+								thumbnail={item.image_mobile}
+							/>
+						</div>
+					))}
 				</div>
-				<Element {...props.data[0]} btnShape='bottom' />
+
+				<ConstructorElement
+					type='bottom'
+					isLocked={true}
+					text={props.bun.name + ' (Низ)'}
+					price={props.bun.price}
+					thumbnail={props.bun.image_mobile}
+				/>
 			</>
 			<div className={styles.total}>
 				<p className='text text_type_digits-medium pt-2'>12345</p>
@@ -63,3 +60,11 @@ export function BurgerConstructor(props) {
 		</section>
 	);
 }
+
+import PropTypes from 'prop-types';
+import { ingredientType } from '../ingredient-type.js';
+
+BurgerConstructor.propTypes = {
+	bun: PropTypes.shape(ingredientType),
+	ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)),
+};

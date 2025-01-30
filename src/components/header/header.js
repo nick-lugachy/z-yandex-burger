@@ -24,10 +24,37 @@ function AppHeaderButton(props) {
 export function AppHeader(props) {
 	return (
 		<header className={s.header}>
-			<AppHeaderButton icon={BurgerIcon}>Конструктор</AppHeaderButton>
-			<AppHeaderButton icon={ListIcon}>Лента заказов</AppHeaderButton>
+			<Button
+				htmlType='button'
+				type='secondary'
+				size='medium'
+				display='inline'
+				extraClass={s.button + ' mr-2 mt-4 mb-4 pr-5 pl-5'}>
+				<BurgerIcon className={s.icon} />
+				Конструктор
+			</Button>
+
+			<Button
+				htmlType='button'
+				type='secondary'
+				size='medium'
+				display='inline'
+				extraClass={s.buttonInactive + ' mr-2 mt-4 mb-4 pr-5 pl-5'}>
+				<ListIcon className={s.icon} type='secondary' />
+				Лента заказов
+			</Button>
+
 			<Logo className={s.logo} />
-			<AppHeaderButton icon={ProfileIcon}>Личный кабинет</AppHeaderButton>
+
+			<Button
+				htmlType='button'
+				type='secondary'
+				size='medium'
+				display='inline'
+				extraClass={s.buttonInactive + ' mr-2 mt-4 mb-4 pr-5 pl-5'}>
+				<ProfileIcon className={s.icon} type='secondary' />
+				Личный кабинет
+			</Button>
 		</header>
 	);
 }
