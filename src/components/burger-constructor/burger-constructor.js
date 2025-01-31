@@ -10,38 +10,48 @@ import { Modal } from '../../components/modal/modal.js';
 export function BurgerConstructor(props) {
 	const [modalVisible, showModal] = useState(false);
 
-	if (props.bun === null) return <div />;
+	//	if (props.bun === null) return <div />;
 
 	return (
 		<section className={styles.section}>
 			<>
-				<ConstructorElement
-					type='top'
-					isLocked={true}
-					text={props.bun.name + ' (Верх)'}
-					price={props.bun.price}
-					thumbnail={props.bun.image_mobile}
-				/>
-
+				{props.bun === null ? (
+					<ConstructorElement />
+				) : (
+					<ConstructorElement
+						type='top'
+						isLocked={true}
+						text={props.bun.name + ' (Верх)'}
+						price={props.bun.price}
+						thumbnail={props.bun.image_mobile}
+					/>
+				)}
 				<div className={styles.scrollSection}>
-					{props.ingredients.map((item) => (
-						<div key={item._id} className={styles.elementContainer}>
-							<ConstructorElement
-								text={item.name}
-								price={item.price}
-								thumbnail={item.image_mobile}
-							/>
-						</div>
-					))}
+					{props.bun == null ? (
+						<ConstructorElement />
+					) : (
+						props.ingredients.map((item) => (
+							<div key={item._id} className={styles.elementContainer}>
+								<ConstructorElement
+									text={item.name}
+									price={item.price}
+									thumbnail={item.image_mobile}
+								/>
+							</div>
+						))
+					)}
 				</div>
-
-				<ConstructorElement
-					type='bottom'
-					isLocked={true}
-					text={props.bun.name + ' (Низ)'}
-					price={props.bun.price}
-					thumbnail={props.bun.image_mobile}
-				/>
+				{props.bun === null ? (
+					<ConstructorElement />
+				) : (
+					<ConstructorElement
+						type='bottom'
+						isLocked={true}
+						text={props.bun.name + ' (Низ)'}
+						price={props.bun.price}
+						thumbnail={props.bun.image_mobile}
+					/>
+				)}
 			</>
 			<div className={styles.total}>
 				<p className='text text_type_digits-medium pt-2'>12345</p>

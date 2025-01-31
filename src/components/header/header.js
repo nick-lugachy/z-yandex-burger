@@ -29,9 +29,9 @@ export function AppHeader(props) {
 				type='secondary'
 				size='medium'
 				display='inline'
-				extraClass={s.button + ' mr-2 mt-4 mb-4 pr-5 pl-5'}>
+				extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
 				<BurgerIcon className={s.icon} />
-				Конструктор
+				<span className={s.button}>Конструктор</span>
 			</Button>
 
 			<Button
@@ -39,9 +39,9 @@ export function AppHeader(props) {
 				type='secondary'
 				size='medium'
 				display='inline'
-				extraClass={s.buttonInactive + ' mr-2 mt-4 mb-4 pr-5 pl-5'}>
+				extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
 				<ListIcon className={s.icon} type='secondary' />
-				Лента заказов
+				<span className={s.buttonInactive}>Лента заказов</span>
 			</Button>
 
 			<Logo className={s.logo} />
@@ -51,9 +51,9 @@ export function AppHeader(props) {
 				type='secondary'
 				size='medium'
 				display='inline'
-				extraClass={s.buttonInactive + ' mr-2 mt-4 mb-4 pr-5 pl-5'}>
+				extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
 				<ProfileIcon className={s.icon} type='secondary' />
-				Личный кабинет
+				<span className={s.buttonInactive}>Личный кабинет</span>
 			</Button>
 		</header>
 	);
