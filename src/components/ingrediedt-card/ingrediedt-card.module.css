@@ -1,0 +1,21 @@
+.icon {
+	vertical-align: middle;
+	margin-left: 4px;
+}
+
+.itemCard {
+	max-width: 272px;
+	position: relative;
+	text-align: center;
+	margin: 16px 8px;
+}
+
+.counter {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.itemName {
+	height: 48px;
+}

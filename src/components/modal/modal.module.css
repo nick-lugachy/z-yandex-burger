@@ -1,0 +1,28 @@
+.modalBody {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+}
+
+.modalHeader {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	flex-grow: 1;
+	height: 60px;
+}
+
+.modalFrame {
+	height: 50%;
+	min-width: 30%;
+	padding: 40px;
+	border-radius: 20px;
+	background-color: var(--background-alt);
+}
+
+.icon {
+	width: 100px;
+	heigth: 100px;
+}

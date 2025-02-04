@@ -1,0 +1,31 @@
+.panel {
+	display: inline-block;
+	gap: 10px;
+	margin: 0px 20px;
+	scroll-behavior: smooth;
+}
+
+.tabBar {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 8px;
+}
+
+.scroll {
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	scrollbar-width: thin;
+	max-height: 700px;
+}
+.ingredientGrid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0px 8px;
+	padding: 0 8px;
+}
+
+.counter {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
