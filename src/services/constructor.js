@@ -27,12 +27,13 @@ const slice = createSlice({
 				});
 
 				if (!inserted) newMap.push(ingredient);
-				// state.ingredients.push({
-				// 	...ingredient,
-				// 	guid: uuidv4(),
-				// });
 				state.ingredients = newMap;
 			}
+		},
+
+		clearIngredient: (state) => {
+			state.ingredients = [];
+			state.bun = null;
 		},
 
 		remIngredient: (state, action) => {
@@ -56,6 +57,6 @@ export function InsertIngredientAfter(id, guid, destGuid) {
 }
 export const burgerConstructor = slice.reducer;
 
-export const { addIngredient, remIngredient } = slice.actions;
+export const { addIngredient, remIngredient, clearIngredient } = slice.actions;
 
 export default burgerConstructor;

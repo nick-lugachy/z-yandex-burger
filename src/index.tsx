@@ -9,21 +9,13 @@ import { ingredients } from './services/ingredients';
 import { ingredientDetail } from './services/ingredient-detail';
 import { order } from './services/order';
 
-const url = `https://norma.nomoreparties.space/api/ingredients`;
-
 import { configureStore } from '@reduxjs/toolkit';
-//import logger from 'redux-logger'
-//import { customEnhancer } from './enhancers'
-
-//const reducer = combineReducers({ constructor, ingredients });
 
 const store = configureStore({
 	reducer: { burgerConstructor, ingredients, ingredientDetail, order },
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ serializableCheck: false }), //.concat(logger),
-	devTools: true, //process.env.NODE_ENV !== 'production',
-	//  preloadedState,
-	//  enhancers: [customEnhancer],
+	devTools: true,
 });
 
 const domNode = document.getElementById('root') as HTMLDivElement;

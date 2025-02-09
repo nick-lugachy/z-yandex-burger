@@ -8,7 +8,7 @@ import { Modal } from '../../components/modal/modal.js';
 import { IngredientDlg } from '../ingredient-details-dlg/ingredient-details-dlg.js';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { detail_closeDlg } from '../../services/ingredient-detail';
+import { detailCloseDlg } from '../../services/ingredient-detail';
 
 const ItemGroups = [
 	{ id: 'bun', name: 'Булки' },
@@ -16,15 +16,15 @@ const ItemGroups = [
 	{ id: 'main', name: 'Начинки' },
 ];
 
-export function BurgerIngredients(props) {
+export function BurgerIngredients() {
 	const [curTab, setCurTab] = useState(ItemGroups[0].id);
 
 	const scrollRef = useRef(null);
 	const headersRefs = useRef([]);
 
-	const [scroll, setScroll] = useState(0);
-
 	const handleScroll = (e) => {
+		if (!headersRefs.current[1].current) return;
+
 		if (
 			headersRefs.current[1].current.offsetTop / 2 >
 			e.currentTarget.scrollTop
@@ -52,7 +52,7 @@ export function BurgerIngredients(props) {
 	}, []);
 
 	const data = useSelector((state) => state.ingredients.data);
-	const dlg = useSelector((state) => state.ingredientDetail);
+	const isModalOpen = useSelector((state) => state.ingredientDetail.showDlg);
 	const dispatch = useDispatch();
 
 	const tabClic = (tab) => {
@@ -99,7 +99,7 @@ export function BurgerIngredients(props) {
 									(Ing) =>
 										item.id === Ing.type && (
 											<Ingredient
-												ref={headersRefs.current[i]}
+												//ref={headersRefs.current[i]}
 												key={Ing._id}
 												{...Ing}
 											/>
@@ -109,19 +109,13 @@ export function BurgerIngredients(props) {
 					</section>
 				))}
 			</section>
-			<Modal
-				isOpen={dlg.showDlg}
-				onClose={() => dispatch(detail_closeDlg())}
-				header='Детали ингридиента'>
-				<IngredientDlg {...dlg.ingredient} />
-			</Modal>
+			{isModalOpen && (
+				<Modal
+					onClose={() => dispatch(detailCloseDlg())}
+					header='Детали ингридиента'>
+					<IngredientDlg />
+				</Modal>
+			)}
 		</section>
 	);
 }
-
-import PropTypes from 'prop-types';
-import { ingredientType } from '../ingredient-type.js';
-
-BurgerIngredients.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.shape(ingredientType)),
-};

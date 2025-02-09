@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const url = `https://norma.nomoreparties.space/api/ingredients`;
+import { requestGET } from '../utils';
+const ep = `ingredients`;
 
 const initialState = {
 	data: null,
@@ -10,7 +11,7 @@ const initialState = {
 };
 
 const slice = createSlice({
-	name: 'ingredients',
+	name: { ep },
 	initialState,
 	reducers: {
 		ingredientsFetching: (state) => {
@@ -33,18 +34,8 @@ const slice = createSlice({
 
 export const fetchIngredients = () => (dispatch) => {
 	dispatch(ingredientsFetching());
-	return fetch(url)
-		.then((res) => {
-			if (res && res.ok) {
-				return res.json();
-			} else {
-				throw new error('Ошибка при загрузке данных...');
-			}
-		})
-		.then((data) => {
-			dispatch(ingredientsFetched(data.data));
-		})
-
+	return requestGET(ep)
+		.then((data) => dispatch(ingredientsFetched(data.data)))
 		.catch((err) => {
 			dispatch(
 				ingredientsFetchingError('большая Ошибка при загрузке данных...')
