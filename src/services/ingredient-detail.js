@@ -9,20 +9,20 @@ const slice = createSlice({
 	name: 'ingredientDetail',
 	initialState,
 	reducers: {
-		detail_set: (state, action) => {
+		detailSet: (state, action) => {
 			state.ingredient = action.payload;
 		},
 
-		detail_clear: (state) => {
+		detailClear: (state) => {
 			state.ingredient = null;
 		},
 
-		detail_showDlg: (state, action) => {
+		detailShowDlg: (state, action) => {
 			state.ingredient = action.payload;
 			state.showDlg = true;
 		},
 
-		detail_closeDlg: (state) => {
+		detailCloseDlg: (state) => {
 			state.ingredient = null;
 			state.showDlg = false;
 		},
@@ -31,7 +31,7 @@ const slice = createSlice({
 
 export const ingredientDetail = slice.reducer;
 
-export const { detail_set, detail_clear, detail_showDlg, detail_closeDlg } =
+export const { detailSet, detailClear, detailShowDlg, detailCloseDlg } =
 	slice.actions;
 
 export default ingredientDetail;

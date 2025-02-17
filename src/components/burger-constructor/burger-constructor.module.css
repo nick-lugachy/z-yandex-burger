@@ -15,7 +15,6 @@
 
 .elementContainer {
 	min-width: 568px;
-
 	scroll-snap-align: start;
 	padding-top: 16px;
 }
@@ -23,6 +22,7 @@
 .dummy {
 	width: 536px;
 	min-height: 80px;
+	margin-left: 24px;
 	background: var(--background-element);
 	border-radius: var(--common-border-radius-s);
 }

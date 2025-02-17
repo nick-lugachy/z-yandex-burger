@@ -1,8 +1,6 @@
 import styles from './burger-constructor-dlg.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { order_create } from '../../services/order.js';
-
 import { useSelector, useDispatch } from 'react-redux';
 
 export const FinishOrderDlg = () => {

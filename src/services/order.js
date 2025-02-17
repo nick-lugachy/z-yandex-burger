@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-const url = ' https://norma.nomoreparties.space/api/orders';
+
+import { clearIngredient } from './constructor';
+const ep = `orders`;
+
+import { requestPOST } from '../utils';
 
 const initialState = {
 	showDlg: false,
@@ -15,38 +19,38 @@ const slice = createSlice({
 	name: 'order',
 	initialState,
 	reducers: {
-		order_updAmount: (state, action) => {
+		orderUpdAmount: (state, action) => {
 			state.amount = action.payload;
 		},
 
-		order_updateArr: (state, action) => {
+		orderUpdateArr: (state, action) => {
 			state.ingredientArr = action.payload;
 		},
 
-		order_showDlg: (state, action) => {
+		orderShowDlg: (state, action) => {
 			state.ingredient = action.payload;
 			state.showDlg = true;
 		},
 
-		order_closeDlg: (state) => {
+		orderCloseDlg: (state) => {
 			state.ingredient = null;
 			state.showDlg = false;
 		},
 
-		order_Fetching: (state) => {
+		orderFetching: (state) => {
 			state.loading = true;
 			state.hasError = false;
 			state.orderId = 'WAIT..';
 			state.description = 'Ожидаем подтверждения заказа..';
 			state.errorTxt = null;
 		},
-		order_Fetched: (state, action) => {
+		orderFetched: (state, action) => {
 			state.orderId = action.payload.order.number;
 			state.description = 'Ваш заказ начали готовить';
 			state.loading = false;
 			state.hasError = false;
 		},
-		order_FetchingError: (state, action) => {
+		orderFetchingError: (state, action) => {
 			state.loading = false;
 			state.orderId = 'ERROR';
 			state.hasError = true;
@@ -55,7 +59,7 @@ const slice = createSlice({
 	},
 });
 
-export function order_fillArr() {
+export function orderFillArr() {
 	return (dispatch, getState) => {
 		const state = getState();
 		const burger = state.burgerConstructor;
@@ -65,49 +69,38 @@ export function order_fillArr() {
 		burger.ingredients.map((I) => arr.push(I._id));
 		arr.push(burger.bun._id);
 
-		dispatch(order_updateArr(arr));
+		dispatch(orderUpdateArr(arr));
 	};
 }
 
-export const order_create = () => (dispatch, getState) => {
-	dispatch(order_fillArr());
-	dispatch(order_Fetching());
+export const orderCreate = () => (dispatch, getState) => {
+	dispatch(orderFillArr());
+	dispatch(orderFetching());
 
 	const state = getState();
 
-	return fetch(url, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ ingredients: state.order.ingredientArr }),
-	})
-		.then((res) => {
-			if (res && res.ok) {
-				return res.json();
-			} else {
-				console.log(res);
-				throw new Error('Ошибка при загрузке данных...');
-			}
-		})
+	return requestPOST(ep, { ingredients: state.order.ingredientArr })
 		.then((data) => {
-			console.log(data);
-			dispatch(order_Fetched(data));
+			dispatch(orderFetched(data));
+			dispatch(clearIngredient());
 		})
-
 		.catch((err) => {
-			dispatch(order_FetchingError('большая Ошибка при загрузке данных...'));
+			dispatch(
+				orderFetchingError({ err } + ' Большая Ошибка при загрузке данных...')
+			);
 		});
 };
 
 export const order = slice.reducer;
 
 export const {
-	order_updAmount,
-	order_showDlg,
-	order_closeDlg,
-	order_updateArr,
-	order_Fetching,
-	order_Fetched,
-	order_FetchingError,
+	orderUpdAmount,
+	orderShowDlg,
+	orderCloseDlg,
+	orderUpdateArr,
+	orderFetching,
+	orderFetched,
+	orderFetchingError,
 } = slice.actions;
 
 export default order;

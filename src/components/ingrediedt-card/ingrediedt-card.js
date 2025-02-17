@@ -3,7 +3,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import { detail_showDlg } from '../../services/ingredient-detail';
+import { detailShowDlg } from '../../services/ingredient-detail';
 
 export const Ingredient = (props) => {
 	const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const Ingredient = (props) => {
 	return (
 		<div
 			ref={dragRef}
-			onClick={() => dispatch(detail_showDlg(props))}
+			onClick={() => dispatch(detailShowDlg(props))}
 			className={styles.itemCard}>
 			<img src={props.image} alt={props.name} className='ml-4 mr-4' />
 			<p className='text text_type_digits-default m-1'>
@@ -45,7 +45,6 @@ export const Ingredient = (props) => {
 	);
 };
 
-import PropTypes from 'prop-types';
 import { ingredientType } from '../ingredient-type.js';
 
 Ingredient.propTypes = { ...ingredientType };
