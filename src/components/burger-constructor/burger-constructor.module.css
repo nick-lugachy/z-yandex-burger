@@ -7,7 +7,6 @@
 	max-height: 480px;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 16px;
 	overflow-y: scroll;
 	scroll-behavior: smooth;
 	scrollbar-width: thin;
@@ -16,9 +15,18 @@
 
 .elementContainer {
 	min-width: 568px;
+
 	scroll-snap-align: start;
 	padding-top: 16px;
 }
+
+.dummy {
+	width: 536px;
+	min-height: 80px;
+	background: var(--background-element);
+	border-radius: var(--common-border-radius-s);
+}
+
 .icon {
 	vertical-align: middle;
 	margin: 16px 40px 16px 8px;

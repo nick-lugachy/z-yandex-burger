@@ -59,12 +59,19 @@
 		"commit": "yarn test && cz"
 	},
 	"dependencies": {
+		"@reduxjs/toolkit": "^2.5.1",
 		"@ya.praktikum/react-developer-burger-ui-components": "^1.14.2",
 		"clsx": "^2.1.0",
 		"core-js": "^3.38.1",
 		"micromatch": "^4.0.8",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dnd": "^16.0.1",
+		"react-dnd-html5-backend": "^16.0.1",
+		"react-dom": "^18.2.0",
+		"react-redux": "^9.2.0",
+		"redux": "^5.0.1",
+		"redux-devtools-extension": "^2.13.9",
+		"redux-thunk": "^3.1.0"
 	},
 	"lint-staged": {
 		"*.{css,scss}": "yarn stylelint:fix",
