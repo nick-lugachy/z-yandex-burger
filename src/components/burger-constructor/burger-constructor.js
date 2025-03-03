@@ -1,6 +1,5 @@
 import { useMemo, useRef } from 'react';
 import styles from './burger-constructor.module.css';
-import { FinishOrderDlg } from '../burger-constructor-dlg/burger-constructor-dlg.js';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import {
@@ -8,12 +7,10 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal } from '../../components/modal/modal.js';
-import { useModal } from '../../hooks/useModal';
-import { orderCreate } from '../../services/order.js';
 
 import { useDrag, useDrop } from 'react-dnd';
 
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	remIngredient,
@@ -83,14 +80,13 @@ function Element(props) {
 }
 
 export function BurgerConstructor(props) {
-	const { isModalOpen, openModal, closeModal } = useModal();
-
-	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const confirmOrder = () => {
 		if (data.bun === null) return;
-		dispatch(orderCreate());
-		openModal();
+		//		dispatch(orderCreate());
+		navigate('/order');
+		//		openModal();
 	};
 
 	const data = useSelector((state) => state.burgerConstructor);
@@ -122,11 +118,6 @@ export function BurgerConstructor(props) {
 				<Button onClick={confirmOrder} htmlType='button' size='medium'>
 					Оформить заказ
 				</Button>
-				{isModalOpen && (
-					<Modal onClose={() => closeModal(false)}>
-						<FinishOrderDlg />
-					</Modal>
-				)}
 			</div>
 		</section>
 	);
