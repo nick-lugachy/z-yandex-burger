@@ -63,7 +63,9 @@ export function AppHeader(props) {
 				</span>
 			</Button>
 
-			<Logo className={s.logo} />
+			<a onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+				<Logo className={s.logo} />
+			</a>
 
 			<Button
 				htmlType='button'

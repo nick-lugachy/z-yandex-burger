@@ -23,7 +23,7 @@ export function ResetPassword() {
 	const navigate = useNavigate();
 	useEffect(() => {
 		if (!state || !'email' in state) {
-			navigate('/login');
+			navigate('/login', { replace: true });
 		}
 	}, []);
 
@@ -31,8 +31,17 @@ export function ResetPassword() {
 	const [password, setPassword] = useState('');
 
 	const dispatch = useDispatch();
+
+	const handleSubmit =  (e) =>{
+
+		e.preventDefault();
+
+		dispatch(resetPassword(password, key));
+		navigate('/login', { replace: true });
+	}
+
 	return (
-		<div className={styles.main}>
+		<form onSubmit={handleSubmit} className={styles.main}>
 			<div className={styles.section}>
 				<p className='m-4 text text_type_main-medium'>Восстановление пароля</p>
 
@@ -56,14 +65,10 @@ export function ResetPassword() {
 				/>
 
 				<Button
-					htmlType='button'
+					htmlType='submit'
 					type='primary'
 					size='medium'
-					extraClass='mt-3'
-					onClick={async () => {
-						await dispatch(resetPassword(password, key));
-						navigate('/login');
-					}}>
+					extraClass='mt-3'>
 					Сохранить
 				</Button>
 
@@ -71,6 +76,6 @@ export function ResetPassword() {
 					Вспомнили пароль? <a href='/login'>войти</a>
 				</p>
 			</div>
-		</div>
+		</form>
 	);
 }

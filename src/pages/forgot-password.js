@@ -21,8 +21,17 @@ export function ForgotPassword() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
+	const handleSubmit = (e) =>{
+		e.preventDefault();
+		dispatch(
+			profileSendEmail(() =>
+				navigate('/reset-password',{state: { email: email }, replace: true })
+			)
+		)
+	}
+	
 	return (
-		<div className={styles.main}>
+		<form onSubmit={handleSubmit} className={styles.main}>
 			<div className={styles.section}>
 				<p className='m-4 text text_type_main-medium'>Восстановление пароля</p>
 
@@ -38,24 +47,11 @@ export function ForgotPassword() {
 				/>
 
 				<Button
-					htmlType='button'
+					htmlType='submit'
 					type='primary'
 					size='medium'
 					disabled={loading}
-					extraClass='mt-3'
-					onClick={() =>
-						dispatch(
-							profileSendEmail(() =>
-								navigate(
-									'/reset-password',
-									{
-										state: { email: email },
-									},
-									{ replace: true }
-								)
-							)
-						)
-					}>
+					extraClass='mt-3'	>
 					Восстановить
 				</Button>
 
@@ -63,6 +59,6 @@ export function ForgotPassword() {
 					Вспомнили пароль? <a href='/login'>войти</a>
 				</p>
 			</div>
-		</div>
+		</form>
 	);
 }

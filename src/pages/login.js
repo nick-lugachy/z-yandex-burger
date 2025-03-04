@@ -11,18 +11,16 @@ import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { profileLogin, setEmail, getUserInfo } from '../services/profile.js';
-import { hasStoredToken } from '../utils';
 
-export function Login() {
-	useEffect(() => {
-		if (hasStoredToken()) {
-			dispatch(getUserInfo());
-		} //try refresh stored token
-	}, []);
+import {useForm} from '../hooks/useForm';
+
+ export function Login() {
 
 	const { email, authorized, loading, errorTxt } = useSelector(
 		(store) => store.profile
 	);
+
+	const {values, handleChange, setValues} = useForm({email, password: ''});
 
 	const dispatch = useDispatch();
 
@@ -39,38 +37,39 @@ export function Login() {
 		}
 	}, [authorized]);
 
-	const [password, setPassword] = useState('');
-
+	const handleSubmit =  (e) =>{
+		e.preventDefault();
+		dispatch(profileLogin(values));
+	}
+	
 	return (
-		<div className={styles.main}>
+		<form onSubmit={handleSubmit} className={styles.main}>
 			<div className={styles.section}>
 				<p className='m-4 text text_type_main-medium'>Вход</p>
 
 				<EmailInput
-					onChange={(e) => dispatch(setEmail(e.target.value))}
-					value={email}
 					name={'email'}
+					onChange={handleChange}
+					value={values.email}
 					placeholder='E-mail'
 					disabled={loading}
 					extraClass='m-3'
 				/>
 
 				<PasswordInput
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
 					name={'password'}
+					onChange={handleChange}
+					value={values.password}
 					placeholder='Пароль'
 					disabled={loading}
 					error={errorTxt !== ''}
-					//					errorText={errorTxt}
 					extraClass='m-3'
 				/>
 
 				<Button
-					htmlType='button'
+					htmlType='submit'
 					type='primary'
 					size='medium'
-					onClick={() => dispatch(profileLogin(password))}
 					disabled={loading}
 					extraClass='mt-3'>
 					Войти
@@ -83,6 +82,6 @@ export function Login() {
 					Забыли пароль? <a href='/forgot-password'>Восстановить пароль</a>
 				</p>
 			</div>
-		</div>
+		</form>
 	);
 }

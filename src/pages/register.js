@@ -8,18 +8,27 @@ import {
 import { useState, useRef } from 'react';
 import styles from './profile.module.css';
 
-import { useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { profileRegUser, setEmail, setName } from '../services/profile.js';
 
+import { useForm } from '../hooks/useForm';
+
 export function Register() {
-	if (localStorage.getItem('refreshToken') !== null) {
-		return <Navigate to='/profile' state={{ from: useLocation() }} replace />;
+	const { authorized } = useSelector((store) => store.profile);
+
+	const { values, handleChange, setValues } = useForm({
+		email: '',
+		name: '',
+		password: '',
+	});
+
+	if (authorized) {
+		return <Navigate to='/profile' replace />;
 	}
 
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 
 	const { email, name, loading, errorTxt } = useSelector(
 		(store) => store.profile
@@ -30,48 +39,52 @@ export function Register() {
 	const [password, setPassword] = useState('');
 	const refName = useRef();
 
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch(profileRegUser(values));
+	};
+
 	return (
-		<div className={styles.main}>
+		<form onSubmit={handleSubmit} className={styles.main}>
 			<div className={styles.section}>
 				<p className='m-4 text text_type_main-medium'>Регистрация</p>
 
 				<Input
-					type={'text'}
-					placeholder={'Имя'}
-					onChange={(e) => dispatch(setName(e.target.value))}
-					value={name}
 					name={'name'}
+					placeholder={'Имя'}
+					type={'text'}
+					onChange={handleChange}
+					value={values.name}
 					disabled={loading}
 					size={'default'}
 					extraClass='m-3'
 				/>
 
 				<EmailInput
-					onChange={(e) => dispatch(setEmail(e.target.value))}
-					value={email}
 					name={'email'}
-					disabled={loading}
 					placeholder='Логин'
+					onChange={handleChange}
+					value={values.email}
+					disabled={loading}
 					extraClass='m-3'
 				/>
 
 				<PasswordInput
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
 					name={'password'}
+					placeholder='Пароль'
+					onChange={handleChange}
+					value={values.password}
 					disabled={loading}
 					error={errorTxt !== ''}
 					errorText={errorTxt}
-					placeholder='Пароль'
 					extraClass='m-3'
 				/>
 
 				<Button
-					htmlType='button'
+					htmlType='submit'
 					type='primary'
 					size='medium'
 					disabled={loading}
-					onClick={() => dispatch(profileRegUser(password))}
 					extraClass='mt-3'>
 					Зарегистрироваться
 				</Button>
@@ -80,6 +93,6 @@ export function Register() {
 					Уже зарегистрированы? <a href='/login'>войти</a>
 				</p>
 			</div>
-		</div>
+		</form>
 	);
 }

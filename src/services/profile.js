@@ -64,8 +64,8 @@ const slice = createSlice({
 		userFetched: (state, action) => {
 			state.email = action.payload.user.email;
 			state.name = action.payload.user.name;
-			state.loading = false;
 			state.authorized = true;
+			state.loading = false;
 		},
 
 		forgotFetched: (state, action) => {
@@ -91,15 +91,11 @@ const slice = createSlice({
 	},
 });
 
-export const profileRegUser = (password) => async (dispatch, getState) => {
+export const profileRegUser = (parm) => async (dispatch, getState) => {
 	const profile = getState().profile;
 
 	dispatch(profileFetching());
-	return requestPOST(epRegister, {
-		email: profile.email,
-		password: password,
-		name: profile.name,
-	})
+	return requestPOST(epRegister, parm)
 		.then((data) => {
 			dispatch(LoginFetched(data));
 		})
@@ -108,14 +104,11 @@ export const profileRegUser = (password) => async (dispatch, getState) => {
 		});
 };
 
-export const profileLogin = (password) => async (dispatch, getState) => {
+export const profileLogin = (parm) => async (dispatch, getState) => {
 	const profile = getState().profile;
 
 	dispatch(profileFetching());
-	return requestPOST(epLogin, {
-		email: profile.email,
-		password: password,
-	})
+	return requestPOST(epLogin, parm)
 		.then((data) => {
 			dispatch(LoginFetched(data));
 		})
@@ -168,26 +161,28 @@ export const patchUserInfo = (password) => async (dispatch, getState) => {
 		});
 };
 
-export const getUserInfo = () => async (dispatch) => {
-	dispatch(profileFetching());
+export const getUserInfo = (callback) => async (dispatch, getState) => {
+	if (!getState().profile.loading) {
+		dispatch(profileFetching());
 
-	return FetchWithToken(epUser)
-		.then((data) => {
-			dispatch(userFetched(data));
-		})
-		.catch((err) => {
-			dispatch(profFetcError(err));
-		});
+		return FetchWithToken(epUser)
+			.then((data) => {
+				dispatch(userFetched(data));
+				if (callback) callback();
+			})
+			.catch((err) => {
+				dispatch(profFetcError(err));
+			});
+	}
 };
 
 export const profileSendEmail = (callback) => async (dispatch, getState) => {
-	const state = getState();
+	const state = getState().profile;
 
 	dispatch(profileFetching());
 	return requestPOST(epForgot, { email: state.email })
 		.then((data) => {
 			dispatch(forgotFetched(data));
-			console.log(data);
 			callback();
 		})
 		.catch((err) => {

@@ -18,7 +18,7 @@ import { FinishOrderDlg } from '../../components//burger-constructor-dlg/burger-
 import { Modal } from '../../components/modal/modal.js';
 import fzf from '../../app/assets/fzf.gif';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from '../../services/ingredients';
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
@@ -45,6 +45,13 @@ export const App = () => {
 		</main>
 	);
 
+	const Loader = () => (
+		<div className={styles.fzf}>
+			<h1>LOADING...</h1>
+			<img src={loader} alt='Осторожно, рентген' />
+		</div>
+	);
+
 	const NotFound404 = () => (
 		<div className={styles.fzf}>
 			<img src={fzf} alt='Страница не найдена' />
@@ -55,49 +62,56 @@ export const App = () => {
 		<div className={styles.root}>
 			<DndProvider backend={HTML5Backend}>
 				<AppHeader />
-				<>
-					<Routes location={background || location}>
-						<Route path='/' element={<Main />} />
+				{
+					<>
+						<Routes location={background || location}>
+							<Route path='/' element={<Main />} />
 
-						<Route
-							path='profile/*'
-							element={
-								<PrivateRoute>
-									<Profile />
-								</PrivateRoute>
-							}
-						/>
-						<Route path='login' element={<Login />} />
-						<Route path='register' element={<Register />} />
-						<Route path='forgot-password' element={<ForgotPassword />} />
-						<Route path='reset-password' element={<ResetPassword />} />
-						<Route path='/ingredients/:ingId' element={<IngredientDlg />} />
-						<Route path='*' element={<NotFound404 />} />
-						<Route
-							path='/order'
-							element={
-								<PrivateRoute>
-									<Modal onClose={handleModalClose}>
-										<FinishOrderDlg />
-									</Modal>
-								</PrivateRoute>
-							}
-						/>
-					</Routes>
-
-					{background && (
-						<Routes>
+							<Route
+								path='profile/*'
+								element={
+									<PrivateRoute>
+										<Profile />
+									</PrivateRoute>
+								}
+							/>
+							<Route path='login' element={<Login />} />
+							<Route path='register' element={<Register />} />
+							<Route path='forgot-password' element={<ForgotPassword />} />
+							<Route path='reset-password' element={<ResetPassword />} />
 							<Route
 								path='/ingredients/:ingId'
+								element={<IngredientDlg header='Детали ингредиента' />}
+							/>
+							<Route path='*' element={<NotFound404 />} />
+							<Route
+								path='/order'
 								element={
-									<Modal onClose={handleModalClose}>
-										<IngredientDlg />
-									</Modal>
+									<PrivateRoute>
+										<Modal onClose={handleModalClose}>
+											<FinishOrderDlg />
+										</Modal>
+									</PrivateRoute>
 								}
 							/>
 						</Routes>
-					)}
-				</>
+
+						{background && (
+							<Routes>
+								<Route
+									path='/ingredients/:ingId'
+									element={
+										<Modal
+											onClose={handleModalClose}
+											header='Детали ингредиента'>
+											<IngredientDlg />
+										</Modal>
+									}
+								/>
+							</Routes>
+						)}
+					</>
+				}
 			</DndProvider>
 		</div>
 	);

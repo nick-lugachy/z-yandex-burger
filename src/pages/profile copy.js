@@ -5,7 +5,7 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
 
 import styles from './profile.module.css';
@@ -20,7 +20,7 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useForm } from '../hooks/useForm';
+import {useForm} from '../hooks/useForm';
 
 export function Profile() {
 	const { email, name, loading, errorTxt } = useSelector(
@@ -28,26 +28,18 @@ export function Profile() {
 	);
 
 	const dispatch = useDispatch();
+	const [disabled, setDisabled] = useState(true);
+	const [password, setPassword] = useState('');
 	const refName = useRef();
 
-	const { values, handleChange, setValues } = useForm({
-		email,
-		name,
-		password: '',
-		disabled: true,
-	});
+	const {values, handleChange, setValues} = useForm({email, name, password: '', disabled:true});
 
 	useEffect(() => {
 		dispatch(getUserInfo());
 	}, []);
-
-	useEffect(() => {
-		setValues({ ...values, email, name });
-	}, [email, name]);
-
 	const onIconClick = () => {
 		refName.current.disabled = false;
-		setValues({ ...values, disabled: false });
+		setDisabled(false);
 		refName.current.focus();
 	};
 
@@ -59,18 +51,8 @@ export function Profile() {
 			: { cursor: 'pointer', color: 'var(--text-inactive-color)' };
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		dispatch(setName(values.name));
-		dispatch(setEmail(values.email));
-		dispatch(patchUserInfo(values.password));
-
-		setValues({ ...values, password: '' });
-	};
-
 	return (
-		<form onSubmit={handleSubmit} className={styles.profileGrid}>
+		<div className={styles.profileGrid}>
 			<div className={styles.leftMenu}>
 				<a
 					className='m-4 text text_type_main-medium'
@@ -101,32 +83,36 @@ export function Profile() {
 								type={'text'}
 								placeholder={'Имя'}
 								name={'name'}
-								onChange={handleChange}
-								onBlur={() => setValues({ ...values, disabled: true })}
+								onChange={(e) => dispatch(setName(e.target.value))}
+								onBlur={() => setDisabled(true)}
 								icon={'EditIcon'}
-								disabled={values.disabled}
-								value={values.name}
+								disabled={disabled}
+								value={name}
+								error={false}
 								ref={refName}
 								onIconClick={onIconClick}
+								errorText={'Ошибка'}
 								size={'default'}
 								extraClass='m-3'
 							/>
 
 							<EmailInput
 								name={'email'}
+								onChange={(e) => dispatch(setEmail(e.target.value))}
+								value={email}
 								placeholder='Логин'
-								onChange={handleChange}
-								value={values.email}
 								isIcon={true}
+								//								ref={refEmail}
 								extraClass='m-3'
 							/>
 
 							<PasswordInput
 								name={'password'}
+								onChange={(e) => setPassword(e.target.value)}
+								value={password}
 								placeholder='Пароль'
-								onChange={handleChange}
-								value={values.password}
 								icon={'EditIcon'}
+								//								ref={refPass}
 								extraClass='m-3'
 							/>
 							<span>
@@ -136,18 +122,26 @@ export function Profile() {
 									size='medium'
 									disabled={loading}
 									extraClass='m-10'
-									onClick={() =>
-										setValues({ ...values, email, name, password: '' })
-									}>
+									onClick={() => dispatch(getUserInfo())}>
 									Отмена
 								</Button>
 
 								<Button
-									htmlType='submit'
+									htmlType='button'
 									type='primary'
 									size='medium'
-									disabled={loading || values.password == ''}
-									extraClass='m-10'>
+									disabled={
+										loading ||
+										password == '' ||
+										//										refPass.error ||
+										//									refEmail.error ||
+										!refName.success
+									}
+									extraClass='m-10'
+									onClick={() => {
+										dispatch(patchUserInfo(password));
+										setPassword('');
+									}}>
 									Сохранить
 								</Button>
 							</span>
@@ -156,6 +150,6 @@ export function Profile() {
 				/>
 				<Route path='history' element={<h1> HISTORY </h1>} />
 			</Routes>
-		</form>
+		</div>
 	);
 }

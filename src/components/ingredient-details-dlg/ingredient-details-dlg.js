@@ -2,7 +2,7 @@ import styles from './ingredient-details-dlg.module.css';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-export const IngredientDlg = () => {
+export const IngredientDlg = ({ header }) => {
 	const data = useSelector((state) => state.ingredients.data);
 
 	const ingredient = data
@@ -12,6 +12,11 @@ export const IngredientDlg = () => {
 	return (
 		ingredient && (
 			<div className={styles.main}>
+				{header && (
+					<p className={'text text_type_main-large ' + styles.modalHeader}>
+						{header}
+					</p>
+				)}
 				<img
 					src={ingredient.image_large}
 					alt={ingredient.name}
