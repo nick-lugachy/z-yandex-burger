@@ -4,7 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profile.module.css';
-import { useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { profileSendEmail, setEmail } from '../services/profile.js';
@@ -21,15 +21,15 @@ export function ForgotPassword() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const handleSubmit = (e) =>{
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(
 			profileSendEmail(() =>
-				navigate('/reset-password',{state: { email: email }, replace: true })
+				navigate('/reset-password', { state: { email: email }, replace: true })
 			)
-		)
-	}
-	
+		);
+	};
+
 	return (
 		<form onSubmit={handleSubmit} className={styles.main}>
 			<div className={styles.section}>
@@ -51,12 +51,12 @@ export function ForgotPassword() {
 					type='primary'
 					size='medium'
 					disabled={loading}
-					extraClass='mt-3'	>
+					extraClass='mt-3'>
 					Восстановить
 				</Button>
 
 				<p className='mt-20 text text_type_main-small'>
-					Вспомнили пароль? <a href='/login'>войти</a>
+					Вспомнили пароль? <Link to='/login'>войти</Link>
 				</p>
 			</div>
 		</form>

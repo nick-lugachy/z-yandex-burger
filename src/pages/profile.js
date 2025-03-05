@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useRef, useEffect } from 'react';
-import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
+import { Routes, Route, useMatch, useNavigate, Link } from 'react-router-dom';
 
 import styles from './profile.module.css';
 
@@ -72,24 +72,24 @@ export function Profile() {
 	return (
 		<form onSubmit={handleSubmit} className={styles.profileGrid}>
 			<div className={styles.leftMenu}>
-				<a
+				<Link
+					to='/profile'
 					className='m-4 text text_type_main-medium'
-					onClick={() => navigate('/profile')}
 					style={ActiveMenu(!isHistoryPath)}>
 					Профиль
-				</a>
-				<a
+				</Link>
+				<Link
+					to='/profile/history'
 					className='m-4 text text_type_main-medium'
-					onClick={() => navigate('/profile/history')}
 					style={ActiveMenu(isHistoryPath)}>
 					История заказов
-				</a>
-				<a
+				</Link>
+				<Link
 					className='m-4 text text_type_main-medium'
 					onClick={() => dispatch(profileLogout())}
 					style={ActiveMenu(false)}>
 					Выход
-				</a>
+				</Link>
 			</div>
 
 			<Routes>

@@ -7,7 +7,7 @@ import {
 import { useState, useEffect } from 'react';
 import styles from './profile.module.css';
 
-import { useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { useNavigate, Navigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { resetPassword, setEmail } from '../services/profile.js';
@@ -32,13 +32,12 @@ export function ResetPassword() {
 
 	const dispatch = useDispatch();
 
-	const handleSubmit =  (e) =>{
-
+	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		dispatch(resetPassword(password, key));
 		navigate('/login', { replace: true });
-	}
+	};
 
 	return (
 		<form onSubmit={handleSubmit} className={styles.main}>
@@ -73,7 +72,7 @@ export function ResetPassword() {
 				</Button>
 
 				<p className='mt-20 text text_type_main-small'>
-					Вспомнили пароль? <a href='/login'>войти</a>
+					Вспомнили пароль? <Link to='/login'>войти</Link>
 				</p>
 			</div>
 		</form>

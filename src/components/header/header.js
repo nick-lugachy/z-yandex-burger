@@ -7,7 +7,7 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate, Link } from 'react-router-dom';
 
 function AppHeaderButton(props) {
 	return (
@@ -63,9 +63,9 @@ export function AppHeader(props) {
 				</span>
 			</Button>
 
-			<a onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+			<Link to='/'>
 				<Logo className={s.logo} />
-			</a>
+			</Link>
 
 			<Button
 				htmlType='button'

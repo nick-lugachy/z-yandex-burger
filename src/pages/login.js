@@ -7,20 +7,19 @@ import {
 import { useState, useEffect } from 'react';
 import styles from './profile.module.css';
 
-import { useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { profileLogin, setEmail, getUserInfo } from '../services/profile.js';
 
-import {useForm} from '../hooks/useForm';
+import { useForm } from '../hooks/useForm';
 
- export function Login() {
-
+export function Login() {
 	const { email, authorized, loading, errorTxt } = useSelector(
 		(store) => store.profile
 	);
 
-	const {values, handleChange, setValues} = useForm({email, password: ''});
+	const { values, handleChange, setValues } = useForm({ email, password: '' });
 
 	const dispatch = useDispatch();
 
@@ -37,11 +36,11 @@ import {useForm} from '../hooks/useForm';
 		}
 	}, [authorized]);
 
-	const handleSubmit =  (e) =>{
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(profileLogin(values));
-	}
-	
+	};
+
 	return (
 		<form onSubmit={handleSubmit} className={styles.main}>
 			<div className={styles.section}>
@@ -76,10 +75,10 @@ import {useForm} from '../hooks/useForm';
 				</Button>
 
 				<p className='mt-20 text text_type_main-small'>
-					Вы новый пользователь? <a href='/register'>Зарегистрироваться</a>
+					Вы новый пользователь? <Link to='/register'>Зарегистрироваться</Link>
 				</p>
 				<p className='mt-4 text text_type_main-small'>
-					Забыли пароль? <a href='/forgot-password'>Восстановить пароль</a>
+					Забыли пароль? <Link to='/forgot-password'>Восстановить пароль</Link>
 				</p>
 			</div>
 		</form>

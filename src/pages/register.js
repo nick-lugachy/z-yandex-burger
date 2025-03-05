@@ -8,7 +8,7 @@ import {
 import { useState, useRef } from 'react';
 import styles from './profile.module.css';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { profileRegUser, setEmail, setName } from '../services/profile.js';
@@ -90,7 +90,7 @@ export function Register() {
 				</Button>
 
 				<p className='mt-20 text text_type_main-small'>
-					Уже зарегистрированы? <a href='/login'>войти</a>
+					Уже зарегистрированы? <Link to='/login'>войти</Link>
 				</p>
 			</div>
 		</form>
