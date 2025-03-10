@@ -68,7 +68,10 @@
 		"react-dnd": "^16.0.1",
 		"react-dnd-html5-backend": "^16.0.1",
 		"react-dom": "^18.2.0",
+		"react-preloaders": "^3.0.3",
+		"react-preloaders2": "^3.0.5",
 		"react-redux": "^9.2.0",
+		"react-router-dom": "^7.1.5",
 		"redux": "^5.0.1",
 		"redux-devtools-extension": "^2.13.9",
 		"redux-thunk": "^3.1.0"

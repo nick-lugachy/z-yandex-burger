@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { clearIngredient } from './constructor';
 const ep = `orders`;
 
-import { requestPOST } from '../utils';
+import { requestPOST, FetchWithToken } from '../utils';
 
 const initialState = {
 	showDlg: false,
@@ -54,7 +54,7 @@ const slice = createSlice({
 			state.loading = false;
 			state.orderId = 'ERROR';
 			state.hasError = true;
-			state.description = action.payload.error;
+			state.description = action.payload;
 		},
 	},
 });
@@ -65,9 +65,11 @@ export function orderFillArr() {
 		const burger = state.burgerConstructor;
 
 		let arr = [];
-		arr.push(burger.bun._id);
-		burger.ingredients.map((I) => arr.push(I._id));
-		arr.push(burger.bun._id);
+		if (burger.bun) {
+			arr.push(burger.bun._id);
+			burger.ingredients.map((I) => arr.push(I._id));
+			arr.push(burger.bun._id);
+		}
 
 		dispatch(orderUpdateArr(arr));
 	};
@@ -79,14 +81,16 @@ export const orderCreate = () => (dispatch, getState) => {
 
 	const state = getState();
 
-	return requestPOST(ep, { ingredients: state.order.ingredientArr })
+	FetchWithToken(ep, 'POST', { ingredients: state.order.ingredientArr })
 		.then((data) => {
 			dispatch(orderFetched(data));
 			dispatch(clearIngredient());
 		})
 		.catch((err) => {
 			dispatch(
-				orderFetchingError({ err } + ' Большая Ошибка при загрузке данных...')
+				orderFetchingError(
+					err.message + ' Большая Ошибка при загрузке данных...'
+				)
 			);
 		});
 };

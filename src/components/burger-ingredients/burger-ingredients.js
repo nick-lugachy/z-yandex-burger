@@ -3,12 +3,8 @@ import styles from './burger-ingredients.module.css';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Ingredient } from '../../components/ingrediedt-card/ingrediedt-card.js';
-import { Modal } from '../../components/modal/modal.js';
 
-import { IngredientDlg } from '../ingredient-details-dlg/ingredient-details-dlg.js';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { detailCloseDlg } from '../../services/ingredient-detail';
+import { useSelector } from 'react-redux';
 
 const ItemGroups = [
 	{ id: 'bun', name: 'Булки' },
@@ -52,8 +48,6 @@ export function BurgerIngredients() {
 	}, []);
 
 	const data = useSelector((state) => state.ingredients.data);
-	const isModalOpen = useSelector((state) => state.ingredientDetail.showDlg);
-	const dispatch = useDispatch();
 
 	const tabClic = (tab) => {
 		setCurTab(tab);
@@ -109,13 +103,6 @@ export function BurgerIngredients() {
 					</section>
 				))}
 			</section>
-			{isModalOpen && (
-				<Modal
-					onClose={() => dispatch(detailCloseDlg())}
-					header='Детали ингридиента'>
-					<IngredientDlg />
-				</Modal>
-			)}
 		</section>
 	);
 }

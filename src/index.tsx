@@ -8,11 +8,14 @@ import { burgerConstructor } from './services/constructor';
 import { ingredients } from './services/ingredients';
 import { ingredientDetail } from './services/ingredient-detail';
 import { order } from './services/order';
+import { profile } from './services/profile';
 
 import { configureStore } from '@reduxjs/toolkit';
 
+import { BrowserRouter as Router } from 'react-router-dom';
+
 const store = configureStore({
-	reducer: { burgerConstructor, ingredients, ingredientDetail, order },
+	reducer: { burgerConstructor, ingredients, ingredientDetail, order, profile },
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ serializableCheck: false }), //.concat(logger),
 	devTools: true,
@@ -21,7 +24,11 @@ const store = configureStore({
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 root.render(
-	<Provider store={store}>
-		<App />
-	</Provider>
+	<StrictMode>
+		<Provider store={store}>
+			<Router>
+				<App />
+			</Router>
+		</Provider>
+	</StrictMode>
 );
