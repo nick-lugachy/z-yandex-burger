@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, LegacyRef } from 'react';
 import styles from './burger-constructor.module.css';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -17,8 +17,16 @@ import {
 	InsertIngredientAfter,
 } from '../../services/constructor';
 
-function Element(props) {
-	const dispatch = useDispatch();
+import { IBurgerArr, IburgerElement } from '../../services/types';
+import { RootState, AppDispatch } from '../../index';
+
+interface IdragItem {
+	id: string;
+	guid: string;
+}
+
+function Element(props: IburgerElement) {
+	const dispatch = useDispatch<AppDispatch>();
 
 	const [, dragRef] = useDrag({
 		type: 'ingredient',
@@ -30,9 +38,9 @@ function Element(props) {
 
 	const [{ isHover, delta }, dropRef] = useDrop({
 		accept: 'ingredient',
-		drop(item) {
+		drop(item: IdragItem) {
 			dispatch(
-				InsertIngredientAfter(item.id, item.guid, props.tp ?? props.guid)
+				InsertIngredientAfter(item.id, item.guid, props.tp ?? props.guid ?? '')
 			);
 		},
 		collect: (monitor) => ({
@@ -45,17 +53,17 @@ function Element(props) {
 	const paddingTop = isHover && props.tp === 'bottom' ? '60px' : '8px';
 	const marginLeft = props.tp && props._id ? '24px' : '0px';
 
-	const ref = useRef();
+	const ref = useRef<HTMLDivElement>(null);
 	const dndRef = dragRef(dropRef(ref));
 
 	return (
 		<div
-			ref={dndRef}
+			ref={dndRef as LegacyRef<HTMLDivElement>}
 			className={styles.elementContainer}
 			style={{ paddingBottom, paddingTop, marginLeft }}>
 			{props._id ? (
 				<>
-					{!props.tp && <DragIcon />}
+					{!props.tp && <DragIcon type='primary' />}
 					<ConstructorElement
 						type={props.tp}
 						isLocked={props.tp !== undefined}
@@ -67,8 +75,8 @@ function Element(props) {
 								? ' (Низ)'
 								: '')
 						}
-						price={props.price}
-						thumbnail={props.image_mobile}
+						price={props.price ?? 0}
+						thumbnail={props.image_mobile ?? ''}
 						handleClose={() => dispatch(remIngredient(props.guid))}
 					/>
 				</>
@@ -79,7 +87,7 @@ function Element(props) {
 	);
 }
 
-export function BurgerConstructor(props) {
+export function BurgerConstructor() {
 	const navigate = useNavigate();
 
 	const confirmOrder = () => {
@@ -89,11 +97,13 @@ export function BurgerConstructor(props) {
 		//		openModal();
 	};
 
-	const data = useSelector((state) => state.burgerConstructor);
+	const data: IBurgerArr = useSelector(
+		(state: RootState) => state.burgerConstructor
+	);
 
 	const orderAmount = useMemo(() => {
-		let summ = 2 * (data.bun === null ? 0 : data.bun.price);
-		data.ingredients.map((item) => (summ += item.price));
+		let summ = 2 * (data.bun && data.bun.price ? data.bun.price : 0);
+		data.ingredients.map((item: IburgerElement) => (summ += item.price ?? 0));
 		return summ;
 	}, [data]);
 
@@ -103,7 +113,7 @@ export function BurgerConstructor(props) {
 				<Element {...data.bun} tp='top' />
 				<div className={styles.scrollSection}>
 					{data.ingredients[0] ? (
-						data.ingredients.map((item) => (
+						data.ingredients.map((item: IburgerElement) => (
 							<Element key={item.guid} {...item} />
 						))
 					) : (
@@ -114,7 +124,7 @@ export function BurgerConstructor(props) {
 			</>
 			<div className={styles.total}>
 				<p className='text text_type_digits-medium pt-2'>{orderAmount}</p>
-				<CurrencyIcon className={styles.icon} />
+				<CurrencyIcon className={styles.icon} type='primary' />
 				<Button onClick={confirmOrder} htmlType='button' size='medium'>
 					Оформить заказ
 				</Button>
