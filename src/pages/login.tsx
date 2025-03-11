@@ -10,18 +10,27 @@ import styles from './profile.module.css';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { profileLogin, setEmail, getUserInfo } from '../services/profile.js';
+import { profileLogin } from '../services/profile';
 
 import { useForm } from '../hooks/useForm';
+import { RootState, AppDispatch } from '../index';
+
+interface IloginInput {
+	email: string;
+	password: string;
+}
 
 export function Login() {
 	const { email, authorized, loading, errorTxt } = useSelector(
-		(store) => store.profile
+		(store: RootState) => store.profile
 	);
 
-	const { values, handleChange, setValues } = useForm({ email, password: '' });
+	const { values, handleChange, setValues } = useForm<IloginInput>({
+		email,
+		password: '',
+	});
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 
 	const state = useLocation().state;
 	const navigate = useNavigate();
@@ -36,7 +45,7 @@ export function Login() {
 		}
 	}, [authorized]);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		dispatch(profileLogin(values));
 	};
@@ -61,7 +70,6 @@ export function Login() {
 					value={values.password}
 					placeholder='Пароль'
 					disabled={loading}
-					error={errorTxt !== ''}
 					extraClass='m-3'
 				/>
 

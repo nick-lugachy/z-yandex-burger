@@ -1,9 +1,13 @@
 import styles from './ingredient-details-dlg.module.css';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { RootState } from '../../index';
+import { Iingredient } from '../../services/types';
 
-export const IngredientDlg = ({ header }) => {
-	const data = useSelector((state) => state.ingredients.data);
+export const IngredientDlg = ({ header }: { header?: string }) => {
+	const data: Iingredient[] = useSelector(
+		(state: RootState) => state.ingredients.data || []
+	);
 
 	const ingredient = data
 		? data.find((Item) => useParams().ingId === Item._id)

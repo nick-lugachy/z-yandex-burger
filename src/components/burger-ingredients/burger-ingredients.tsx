@@ -1,10 +1,19 @@
-import { useState, useEffect, useRef, createRef } from 'react';
+import {
+	useState,
+	useEffect,
+	useRef,
+	createRef,
+	UIEvent,
+	RefObject,
+} from 'react';
 import styles from './burger-ingredients.module.css';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Ingredient } from '../../components/ingrediedt-card/ingrediedt-card.js';
+import { Ingredient } from '../ingrediedt-card/ingrediedt-card';
 
 import { useSelector } from 'react-redux';
+import { Iingredient } from '../../services/types';
+import { RootState } from '../../index';
 
 const ItemGroups = [
 	{ id: 'bun', name: 'Булки' },
@@ -15,11 +24,12 @@ const ItemGroups = [
 export function BurgerIngredients() {
 	const [curTab, setCurTab] = useState(ItemGroups[0].id);
 
-	const scrollRef = useRef(null);
-	const headersRefs = useRef([]);
+	const scrollRef = useRef<HTMLDivElement>(null);
+	const headersRefs = useRef<RefObject<HTMLHeadingElement>[]>([]);
 
-	const handleScroll = (e) => {
+	const handleScroll = (e: UIEvent<HTMLDivElement>) => {
 		if (!headersRefs.current[1].current) return;
+		if (!headersRefs.current[2].current) return;
 
 		if (
 			headersRefs.current[1].current.offsetTop / 2 >
@@ -37,23 +47,20 @@ export function BurgerIngredients() {
 	};
 
 	useEffect(() => {
-		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, []);
-
-	useEffect(() => {
 		headersRefs.current = ItemGroups.map(
-			(_, i) => headersRefs.current[i] ?? createRef()
+			(_, i) => headersRefs.current[i] ?? createRef<HTMLHeadingElement>()
 		);
 	}, []);
 
-	const data = useSelector((state) => state.ingredients.data);
+	const data: Array<Iingredient> = useSelector(
+		(state: RootState) => state.ingredients.data
+	);
 
-	const tabClic = (tab) => {
+	const tabClic = (tab: string) => {
 		setCurTab(tab);
 		const h = headersRefs.current[ItemGroups.findIndex((a) => a.id === tab)];
 
-		if (h.current) {
+		if (scrollRef.current && h.current) {
 			scrollRef.current.scrollTo(
 				0,
 				h.current.offsetTop - scrollRef.current.offsetTop
@@ -90,7 +97,7 @@ export function BurgerIngredients() {
 						<section className={styles.ingredientGrid}>
 							{data !== null &&
 								data.map(
-									(Ing) =>
+									(Ing: Iingredient) =>
 										item.id === Ing.type && (
 											<Ingredient
 												//ref={headersRefs.current[i]}

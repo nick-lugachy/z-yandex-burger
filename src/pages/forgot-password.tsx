@@ -7,21 +7,23 @@ import styles from './profile.module.css';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { profileSendEmail, setEmail } from '../services/profile.js';
+import { profileSendEmail, setEmail } from '../services/profile';
+
+import { RootState, AppDispatch } from '../index';
 
 export function ForgotPassword() {
 	const { email, loading, hasError, errorTxt, authorized } = useSelector(
-		(store) => store.profile
+		(store: RootState) => store.profile
 	);
 
 	if (authorized) {
 		return <Navigate to='/profile' replace />;
 	}
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		dispatch(
 			profileSendEmail(() =>
@@ -43,7 +45,6 @@ export function ForgotPassword() {
 					extraClass='m-3'
 					errorText={errorTxt}
 					disabled={loading}
-					error={hasError}
 				/>
 
 				<Button

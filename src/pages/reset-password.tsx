@@ -10,10 +10,11 @@ import styles from './profile.module.css';
 import { useNavigate, Navigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { resetPassword, setEmail } from '../services/profile.js';
+import { resetPassword } from '../services/profile';
+import { RootState, AppDispatch } from '../index';
 
 export function ResetPassword() {
-	const { authorized } = useSelector((store) => store.profile);
+	const { authorized } = useSelector((store: RootState) => store.profile);
 
 	if (authorized) {
 		return <Navigate to='/profile' replace />;
@@ -22,7 +23,7 @@ export function ResetPassword() {
 	const state = useLocation().state;
 	const navigate = useNavigate();
 	useEffect(() => {
-		if (!state || !'email' in state) {
+		if (!state || !('email' in state)) {
 			navigate('/login', { replace: true });
 		}
 	}, []);
@@ -30,9 +31,9 @@ export function ResetPassword() {
 	const [key, setKey] = useState('');
 	const [password, setPassword] = useState('');
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		dispatch(resetPassword(password, key));
@@ -49,7 +50,7 @@ export function ResetPassword() {
 					value={password}
 					name={'password'}
 					placeholder='Введите новый пароль'
-					icon={null}
+					icon={undefined}
 					extraClass='m-3'
 				/>
 

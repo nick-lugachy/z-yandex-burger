@@ -4,27 +4,28 @@ import styles from './app.module.css';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { AppHeader } from '../header/header.js';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients.js';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor.js';
+import { AppHeader } from '../header/header';
+import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
+import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { Profile } from '../../pages/profile';
 import { Register } from '../../pages/register';
 import { Login } from '../../pages/login';
 import { ForgotPassword } from '../../pages/forgot-password';
 import { ResetPassword } from '../../pages/reset-password';
 import { PrivateRoute } from '../../pages/private-route';
-import { IngredientDlg } from '../../components/ingredient-details-dlg/ingredient-details-dlg';
-import { FinishOrderDlg } from '../../components//burger-constructor-dlg/burger-constructor-dlg.js';
-import { Modal } from '../../components/modal/modal.js';
+import { IngredientDlg } from '../ingredient-details-dlg/ingredient-details-dlg';
+import { FinishOrderDlg } from '../burger-constructor-dlg/burger-constructor-dlg';
+import { Modal } from '../modal/modal';
 import fzf from '../../app/assets/fzf.gif';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from '../../services/ingredients';
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { RootState, AppDispatch } from '../../index';
 
 export const App = () => {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -43,13 +44,6 @@ export const App = () => {
 			<BurgerIngredients />
 			<BurgerConstructor />
 		</main>
-	);
-
-	const Loader = () => (
-		<div className={styles.fzf}>
-			<h1>LOADING...</h1>
-			<img src={loader} alt='Осторожно, рентген' />
-		</div>
 	);
 
 	const NotFound404 = () => (

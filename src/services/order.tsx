@@ -5,6 +5,9 @@ const ep = `orders`;
 
 import { requestPOST, FetchWithToken } from '../utils';
 
+import { IBurgerArr, IburgerElement, Iingredient } from '../services/types';
+import { RootState, AppDispatch } from '../index';
+
 const initialState = {
 	showDlg: false,
 	orderId: '',
@@ -27,22 +30,11 @@ const slice = createSlice({
 			state.ingredientArr = action.payload;
 		},
 
-		orderShowDlg: (state, action) => {
-			state.ingredient = action.payload;
-			state.showDlg = true;
-		},
-
-		orderCloseDlg: (state) => {
-			state.ingredient = null;
-			state.showDlg = false;
-		},
-
 		orderFetching: (state) => {
 			state.loading = true;
 			state.hasError = false;
 			state.orderId = 'WAIT..';
 			state.description = 'Ожидаем подтверждения заказа..';
-			state.errorTxt = null;
 		},
 		orderFetched: (state, action) => {
 			state.orderId = action.payload.order.number;
@@ -60,14 +52,14 @@ const slice = createSlice({
 });
 
 export function orderFillArr() {
-	return (dispatch, getState) => {
+	return (dispatch: AppDispatch, getState: Function) => {
 		const state = getState();
 		const burger = state.burgerConstructor;
 
 		let arr = [];
 		if (burger.bun) {
 			arr.push(burger.bun._id);
-			burger.ingredients.map((I) => arr.push(I._id));
+			burger.ingredients.map((I: IburgerElement) => arr.push(I._id));
 			arr.push(burger.bun._id);
 		}
 
@@ -75,32 +67,31 @@ export function orderFillArr() {
 	};
 }
 
-export const orderCreate = () => (dispatch, getState) => {
-	dispatch(orderFillArr());
-	dispatch(orderFetching());
+export const orderCreate =
+	() => (dispatch: AppDispatch, getState: Function) => {
+		dispatch(orderFillArr());
+		dispatch(orderFetching());
 
-	const state = getState();
+		const state = getState();
 
-	FetchWithToken(ep, 'POST', { ingredients: state.order.ingredientArr })
-		.then((data) => {
-			dispatch(orderFetched(data));
-			dispatch(clearIngredient());
-		})
-		.catch((err) => {
-			dispatch(
-				orderFetchingError(
-					err.message + ' Большая Ошибка при загрузке данных...'
-				)
-			);
-		});
-};
+		FetchWithToken(ep, 'POST', { ingredients: state.order.ingredientArr })
+			.then((data) => {
+				dispatch(orderFetched(data));
+				dispatch(clearIngredient());
+			})
+			.catch((err) => {
+				dispatch(
+					orderFetchingError(
+						err.message + ' Большая Ошибка при загрузке данных...'
+					)
+				);
+			});
+	};
 
 export const order = slice.reducer;
 
 export const {
 	orderUpdAmount,
-	orderShowDlg,
-	orderCloseDlg,
 	orderUpdateArr,
 	orderFetching,
 	orderFetched,

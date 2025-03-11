@@ -9,21 +9,7 @@ import {
 
 import { useMatch, useNavigate, Link } from 'react-router-dom';
 
-function AppHeaderButton(props) {
-	return (
-		<Button
-			htmlType='button'
-			type='secondary'
-			size='medium'
-			display='inline'
-			extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
-			<props.icon className={s.icon} type='secondary' />
-			{props.children}
-		</Button>
-	);
-}
-
-export function AppHeader(props) {
+export function AppHeader() {
 	const navigate = useNavigate();
 	const isProfilePath = useMatch('/profile/*');
 	const isFeedPath = useMatch('/order-feed/*');
@@ -36,7 +22,6 @@ export function AppHeader(props) {
 				onClick={() => navigate('/')}
 				type='secondary'
 				size='medium'
-				display='inline'
 				extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
 				<BurgerIcon
 					className={s.icon}
@@ -52,7 +37,6 @@ export function AppHeader(props) {
 				onClick={() => navigate('/order-feed')}
 				type='secondary'
 				size='medium'
-				display='inline'
 				extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
 				<ListIcon
 					className={s.icon}
@@ -72,7 +56,6 @@ export function AppHeader(props) {
 				onClick={() => navigate('/profile')}
 				type='secondary'
 				size='medium'
-				display='inline'
 				extraClass='mr-2 mt-4 mb-4 pr-5 pl-5'>
 				<ProfileIcon
 					className={s.icon}

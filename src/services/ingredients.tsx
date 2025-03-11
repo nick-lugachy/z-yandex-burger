@@ -1,17 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { requestGET } from '../utils';
+import { AppDispatch } from '../index';
+
 const ep = `ingredients`;
 
 const initialState = {
-	data: null,
+	data: [],
 	loading: false,
 	hasError: false,
 	errorTxt: null,
 };
 
 const slice = createSlice({
-	name: { ep },
+	name: ep,
 	initialState,
 	reducers: {
 		ingredientsFetching: (state) => {
@@ -32,7 +34,7 @@ const slice = createSlice({
 	},
 });
 
-export const fetchIngredients = () => (dispatch) => {
+export const fetchIngredients = () => (dispatch: AppDispatch) => {
 	dispatch(ingredientsFetching());
 	return requestGET(ep)
 		.then((data) => dispatch(ingredientsFetched(data.data)))

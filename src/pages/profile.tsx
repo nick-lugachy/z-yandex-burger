@@ -16,19 +16,20 @@ import {
 	profileLogout,
 	setName,
 	setEmail,
-} from '../services/profile.js';
+} from '../services/profile';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useForm } from '../hooks/useForm';
+import { RootState, AppDispatch } from '../index';
 
 export function Profile() {
 	const { email, name, loading, errorTxt } = useSelector(
-		(store) => store.profile
+		(store: RootState) => store.profile
 	);
 
-	const dispatch = useDispatch();
-	const refName = useRef();
+	const dispatch = useDispatch<AppDispatch>();
+	const refName = useRef<HTMLInputElement>(null);
 
 	const { values, handleChange, setValues } = useForm({
 		email,
@@ -46,20 +47,22 @@ export function Profile() {
 	}, [email, name]);
 
 	const onIconClick = () => {
-		refName.current.disabled = false;
-		setValues({ ...values, disabled: false });
-		refName.current.focus();
+		if (refName.current) {
+			refName.current.disabled = false;
+			setValues({ ...values, disabled: false });
+			refName.current.focus();
+		}
 	};
 
 	const navigate = useNavigate();
-	const isHistoryPath = useMatch('/profile/history/*');
-	const ActiveMenu = (enable) => {
+	const isHistoryPath = useMatch('/profile/history/*') != null;
+	const ActiveMenu = (enable: boolean) => {
 		return enable
 			? { cursor: 'pointer', color: 'var(--text-primary-color)' }
 			: { cursor: 'pointer', color: 'var(--text-inactive-color)' };
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		dispatch(setName(values.name));
@@ -85,6 +88,7 @@ export function Profile() {
 					История заказов
 				</Link>
 				<Link
+					to='/profile'
 					className='m-4 text text_type_main-medium'
 					onClick={() => dispatch(profileLogout())}
 					style={ActiveMenu(false)}>
