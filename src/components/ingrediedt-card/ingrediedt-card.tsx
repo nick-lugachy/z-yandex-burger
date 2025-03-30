@@ -4,8 +4,10 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { useLocation, Link } from 'react-router-dom';
+import { RootState } from '../../index';
+import { Iingredient, IBurgerArr } from '../../services/types';
 
-export const Ingredient = (props) => {
+export const Ingredient = (props: Iingredient) => {
 	const dispatch = useDispatch();
 
 	const location = useLocation();
@@ -17,9 +19,11 @@ export const Ingredient = (props) => {
 		item: { id: props._id },
 	});
 
-	const data = useSelector((state) => state.burgerConstructor);
+	const data: IBurgerArr = useSelector(
+		(state: RootState) => state.burgerConstructor
+	);
 
-	let count = null;
+	let count: number = 0;
 
 	if (data.bun !== null) {
 		if (props._id === data.bun._id) {
@@ -47,14 +51,10 @@ export const Ingredient = (props) => {
 				<p className={styles.itemName + ' text text_type_main-default'}>
 					{props.name}
 				</p>
-				{count && (
+				{count != 0 && (
 					<Counter count={count} size='default' extraClass={styles.counter} />
 				)}
 			</div>
 		</Link>
 	);
 };
-
-import { ingredientType } from '../ingredient-type.js';
-
-Ingredient.propTypes = { ...ingredientType };

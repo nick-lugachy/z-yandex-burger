@@ -11,14 +11,21 @@ import styles from './profile.module.css';
 import { Navigate, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { profileRegUser, setEmail, setName } from '../services/profile.js';
+import { profileRegUser, setEmail, setName } from '../services/profile';
 
 import { useForm } from '../hooks/useForm';
+import { RootState, AppDispatch } from '../index';
+
+interface IregInput {
+	email: string;
+	name: string;
+	password: string;
+}
 
 export function Register() {
-	const { authorized } = useSelector((store) => store.profile);
+	const { authorized } = useSelector((store: RootState) => store.profile);
 
-	const { values, handleChange, setValues } = useForm({
+	const { values, handleChange, setValues } = useForm<IregInput>({
 		email: '',
 		name: '',
 		password: '',
@@ -28,10 +35,10 @@ export function Register() {
 		return <Navigate to='/profile' replace />;
 	}
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 
 	const { email, name, loading, errorTxt } = useSelector(
-		(store) => store.profile
+		(store: RootState) => store.profile
 	);
 
 	//	const [name, setName] = useState('');
@@ -39,7 +46,7 @@ export function Register() {
 	const [password, setPassword] = useState('');
 	const refName = useRef();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		dispatch(profileRegUser(values));
 	};
@@ -75,7 +82,6 @@ export function Register() {
 					onChange={handleChange}
 					value={values.password}
 					disabled={loading}
-					error={errorTxt !== ''}
 					errorText={errorTxt}
 					extraClass='m-3'
 				/>

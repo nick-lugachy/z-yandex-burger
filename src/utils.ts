@@ -5,14 +5,14 @@ export function hasStoredToken() {
 	return token != null && token != 'null' && token != 'undefined';
 }
 
-export function checkResponse(res) {
+export function checkResponse(res: Response) {
 	if (res.ok) {
 		return res.json();
 	}
-	return res.json().then((err) => Promise.reject(err));
+	return res.json().then((err: Error) => Promise.reject(err));
 }
 
-export async function requestGET(endpoint, token) {
+export async function requestGET(endpoint: string, token?: string) {
 	return token === undefined
 		? fetch(BASE_URL + `/` + endpoint).then(checkResponse)
 		: fetch(BASE_URL + `/` + endpoint, {
@@ -21,7 +21,7 @@ export async function requestGET(endpoint, token) {
 		  }).then(checkResponse);
 }
 
-export async function requestPOST(endpoint, parm) {
+export async function requestPOST(endpoint: string, parm: object) {
 	return fetch(BASE_URL + `/` + endpoint, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -41,10 +41,14 @@ export const refreshToken = async () => {
 	});
 };
 
-export async function FetchWithToken(endpoint, method = 'GET', parm) {
+export async function FetchWithToken(
+	endpoint: string,
+	method = 'GET',
+	parm?: object
+) {
 	const body = parm ? { body: JSON.stringify(parm) } : '';
 	const url = BASE_URL + `/` + endpoint;
-	const header = (token) => {
+	const header = (token: string) => {
 		return {
 			method: method,
 			headers: { 'Content-Type': 'application/json', authorization: token },
@@ -53,20 +57,16 @@ export async function FetchWithToken(endpoint, method = 'GET', parm) {
 	};
 
 	try {
-		//		console.log(header(localStorage.getItem('accessToken')));
-
-		const res = await fetch(url, header(localStorage.getItem('accessToken')));
+		const res = await fetch(
+			url,
+			header(localStorage.getItem('accessToken') ?? '')
+		);
 		return await checkResponse(res);
-	} catch (err) {
-		// return await fetch(url, header(localStorage.getItem('accessToken')))
-
-		// 	.then(checkResponse)
-		// 	.catch(async (err) => {
-		if (err.message === 'jwt expired') {
+	} catch (err: any) {
+		//TODO: по какой то непонятной причине не дает тут написать тип Error
+		if (err && err.message === 'jwt expired') {
 			const data = await refreshToken();
-			//				 refreshToken().then(async (data) => {
 			return await fetch(url, header(data.accessToken)).then(checkResponse);
-			//				});
 		} else {
 			return Promise.reject(err);
 		}

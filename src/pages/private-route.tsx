@@ -1,10 +1,12 @@
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { hasStoredToken } from '../utils';
-import { useEffect, useState } from 'react';
-import { getUserInfo } from '../services/profile.js';
+import { useEffect, useState, ReactNode } from 'react';
+import { getUserInfo } from '../services/profile';
 import loader from '../app/assets/loader.gif';
 import styles from '../components/app/app.module.css';
+
+import { RootState, AppDispatch } from '../index';
 
 const Loader = () => (
 	<div className={styles.fzf}>
@@ -13,9 +15,9 @@ const Loader = () => (
 	</div>
 );
 
-export function PrivateRoute(props) {
-	const { authorized } = useSelector((store) => store.profile);
-	const dispatch = useDispatch();
+export function PrivateRoute({ children }: { children: ReactNode }) {
+	const { authorized } = useSelector((store: RootState) => store.profile);
+	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 
 	const [loading, setLoading] = useState(!authorized && hasStoredToken());
@@ -35,5 +37,5 @@ export function PrivateRoute(props) {
 
 	if (loading) return <Loader />;
 
-	return props.children;
+	return children;
 }
