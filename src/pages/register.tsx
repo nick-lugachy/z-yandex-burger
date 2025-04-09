@@ -10,11 +10,10 @@ import styles from './profile.module.css';
 
 import { Navigate, Link } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { profileRegUser, setEmail, setName } from '../services/profile';
 
 import { useForm } from '../hooks/useForm';
-import { RootState, AppDispatch } from '../index';
+import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
 
 interface IregInput {
 	email: string;
@@ -23,7 +22,7 @@ interface IregInput {
 }
 
 export function Register() {
-	const { authorized } = useSelector((store: RootState) => store.profile);
+	const { authorized } = useSelectorTp((state) => state.profile);
 
 	const { values, handleChange, setValues } = useForm<IregInput>({
 		email: '',
@@ -35,11 +34,9 @@ export function Register() {
 		return <Navigate to='/profile' replace />;
 	}
 
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatchTp();
 
-	const { email, name, loading, errorTxt } = useSelector(
-		(store: RootState) => store.profile
-	);
+	const { loading, errorTxt } = useSelectorTp((state) => state.profile);
 
 	//	const [name, setName] = useState('');
 	//	const [login, setLogin] = useState('');

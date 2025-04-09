@@ -68,6 +68,8 @@ export async function FetchWithToken(
 			const data = await refreshToken();
 			return await fetch(url, header(data.accessToken)).then(checkResponse);
 		} else {
+			localStorage.removeItem('accessToken');
+			localStorage.removeItem('refreshToken');
 			return Promise.reject(err);
 		}
 	}

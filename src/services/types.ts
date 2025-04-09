@@ -35,3 +35,20 @@ export interface IBurgerArr {
 	bun: IburgerElement | null;
 	ingredients: IburgerElement[];
 }
+
+export interface IFeedOrder {
+	_id: string;
+	ingredients: string[];
+	name: string;
+	status: string;
+	createdAt: string;
+	updatedAt: string;
+	number: string;
+}
+
+export interface IFeedData {
+	success: boolean;
+	orders: Array<IFeedOrder>;
+	total: number;
+	totalToday: number;
+}
