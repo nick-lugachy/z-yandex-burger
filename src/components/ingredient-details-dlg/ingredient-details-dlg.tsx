@@ -1,12 +1,17 @@
 import styles from './ingredient-details-dlg.module.css';
-import { useSelector } from 'react-redux';
+
 import { useParams } from 'react-router-dom';
-import { RootState } from '../../index';
+import {
+	RootState,
+	AppDispatch,
+	useSelectorTp,
+	useDispatchTp,
+} from '../../index';
 import { Iingredient } from '../../services/types';
 
 export const IngredientDlg = ({ header }: { header?: string }) => {
-	const data: Iingredient[] = useSelector(
-		(state: RootState) => state.ingredients.data || []
+	const data: Iingredient[] = useSelectorTp(
+		(state) => state.ingredients.data || []
 	);
 
 	const ingredient = data

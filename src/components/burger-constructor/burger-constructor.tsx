@@ -11,14 +11,19 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+
 import {
 	remIngredient,
 	InsertIngredientAfter,
 } from '../../services/constructor';
 
 import { IBurgerArr, IburgerElement } from '../../services/types';
-import { RootState, AppDispatch } from '../../index';
+import {
+	RootState,
+	AppDispatch,
+	useSelectorTp,
+	useDispatchTp,
+} from '../../index';
 
 interface IdragItem {
 	id: string;
@@ -26,7 +31,7 @@ interface IdragItem {
 }
 
 function Element(props: IburgerElement) {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatchTp();
 
 	const [, dragRef] = useDrag({
 		type: 'ingredient',
@@ -97,9 +102,7 @@ export function BurgerConstructor() {
 		//		openModal();
 	};
 
-	const data: IBurgerArr = useSelector(
-		(state: RootState) => state.burgerConstructor
-	);
+	const data: IBurgerArr = useSelectorTp((state) => state.burgerConstructor);
 
 	const orderAmount = useMemo(() => {
 		let summ = 2 * (data.bun && data.bun.price ? data.bun.price : 0);
