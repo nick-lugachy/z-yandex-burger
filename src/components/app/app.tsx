@@ -15,17 +15,24 @@ import { ResetPassword } from '../../pages/reset-password';
 import { PrivateRoute } from '../../pages/private-route';
 import { IngredientDlg } from '../ingredient-details-dlg/ingredient-details-dlg';
 import { FinishOrderDlg } from '../burger-constructor-dlg/burger-constructor-dlg';
+import { OrderCardDlg } from '../feed-order-dlg/feed-order-dlg';
 import { Modal } from '../modal/modal';
 import fzf from '../../app/assets/fzf.gif';
+import { FeedPage } from '../feed/feed-page';
 
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from '../../services/ingredients';
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { RootState, AppDispatch } from '../../index';
+import {
+	RootState,
+	AppDispatch,
+	useSelectorTp,
+	useDispatchTp,
+} from '../../index';
 
 export const App = () => {
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatchTp();
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -78,6 +85,7 @@ export const App = () => {
 								element={<IngredientDlg header='Детали ингредиента' />}
 							/>
 							<Route path='*' element={<NotFound404 />} />
+							<Route path='order-feed' element={<FeedPage />} />
 							<Route
 								path='/order'
 								element={
@@ -88,6 +96,8 @@ export const App = () => {
 									</PrivateRoute>
 								}
 							/>
+
+							<Route path='/order-feed/:orderId' element={<OrderCardDlg />} />
 						</Routes>
 
 						{background && (
@@ -99,6 +109,22 @@ export const App = () => {
 											onClose={handleModalClose}
 											header='Детали ингредиента'>
 											<IngredientDlg />
+										</Modal>
+									}
+								/>
+								<Route
+									path='/order-feed/:orderId'
+									element={
+										<Modal onClose={handleModalClose}>
+											<OrderCardDlg />
+										</Modal>
+									}
+								/>
+								<Route
+									path='/profile/history/:orderId'
+									element={
+										<Modal onClose={handleModalClose}>
+											<OrderCardDlg />
 										</Modal>
 									}
 								/>

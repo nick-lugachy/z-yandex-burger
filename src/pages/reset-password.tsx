@@ -8,13 +8,12 @@ import { useState, useEffect } from 'react';
 import styles from './profile.module.css';
 
 import { useNavigate, Navigate, useLocation, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { resetPassword } from '../services/profile';
-import { RootState, AppDispatch } from '../index';
+import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
 
 export function ResetPassword() {
-	const { authorized } = useSelector((store: RootState) => store.profile);
+	const { authorized } = useSelectorTp((state) => state.profile);
 
 	if (authorized) {
 		return <Navigate to='/profile' replace />;
@@ -31,7 +30,7 @@ export function ResetPassword() {
 	const [key, setKey] = useState('');
 	const [password, setPassword] = useState('');
 
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatchTp();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

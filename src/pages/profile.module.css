@@ -4,7 +4,7 @@
 
 .profileGrid {
 	display: grid;
-	grid-template-columns: 1fr 3fr;
+	grid-template-columns: 1fr 2fr;
 	margin: 100px 0px;
 }
 
@@ -14,6 +14,7 @@
 	justify-content: flex-start;
 	align-items: flex-start;
 	text-align: center;
+	margin: 0px 60px;
 }
 
 .section {
@@ -22,4 +23,5 @@
 	justify-content: flex-start;
 	align-items: center;
 	text-align: center;
+	max-width: 600px;
 }

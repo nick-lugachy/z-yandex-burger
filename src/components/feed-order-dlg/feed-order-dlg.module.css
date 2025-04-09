@@ -1,0 +1,82 @@
+.orderCard {
+	border-radius: 20px;
+	background-color: var(--background);
+	margin-top: 16px;
+	padding: 24px;
+	width: 600px;
+	text-align: left;
+}
+
+.bottom {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 40px;
+}
+
+.burgerContent {
+	overflow-y: auto;
+	scrollbar-width: thin;
+	max-height: 300px;
+}
+
+.ingredient {
+	display: flex;
+	align-items: center;
+	margin: 8px 0px;
+	padding-right: 24px;
+}
+
+.contentContainer {
+	height: 64px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	margin-top: 24px;
+}
+
+.iconGradient {
+	width: 64px;
+	height: 64px;
+	border-radius: 100%;
+	background: linear-gradient(45deg, #801ab2, #4c4cff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.iconFrame {
+	width: 60px;
+	height: 60px;
+	border-radius: 100%;
+	border: 2px transparent;
+	background: black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.icon {
+	height: 55px;
+	width: 55px;
+	border-radius: 100%;
+	background-position: center;
+	background-size: cover;
+}
+
+.ingExtra {
+	height: 55px;
+	width: 55px;
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.amountFrame {
+	width: 128px;
+	display: flex;
+	align-items: center;
+	justify-content: right;
+}
