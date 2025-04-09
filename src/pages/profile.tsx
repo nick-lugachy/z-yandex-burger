@@ -19,9 +19,10 @@ import {
 } from '../services/profile';
 
 import { Feed } from '../components/feed/feed';
+import { OrderCardDlg } from '../components/feed-order-dlg/feed-order-dlg';
 
 import { useForm } from '../hooks/useForm';
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { useSelectorTp, useDispatchTp } from '../index';
 
 export function Profile() {
 	const { email, name, loading, errorTxt } = useSelectorTp(
@@ -158,6 +159,9 @@ export function Profile() {
 						</div>
 					}
 				/>
+
+				<Route path='history/:orderId' element={<OrderCardDlg />} />
+
 				<Route path='history' element={<Feed showByUser={true} />} />
 			</Routes>
 		</form>

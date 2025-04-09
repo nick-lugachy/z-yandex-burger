@@ -55,7 +55,7 @@ export function OrderCardDlg() {
 		if (!order) {
 			dispatch(fetchOrder('orders/' + orderId));
 		}
-	}, [order, ingredients]);
+	}, [order]);
 
 	if (!order || !ingredients) return;
 

@@ -69,15 +69,6 @@ export const App = () => {
 							<Route path='/' element={<Main />} />
 
 							<Route
-								path='/profile/history/:orderId'
-								element={
-									<PrivateRoute>
-										<OrderCardDlg />
-									</PrivateRoute>
-								}
-							/>
-
-							<Route
 								path='profile/*'
 								element={
 									<PrivateRoute>
@@ -132,11 +123,9 @@ export const App = () => {
 								<Route
 									path='/profile/history/:orderId'
 									element={
-										<PrivateRoute>
-											<Modal onClose={handleModalClose}>
-												<OrderCardDlg />
-											</Modal>
-										</PrivateRoute>
+										<Modal onClose={handleModalClose}>
+											<OrderCardDlg />
+										</Modal>
 									}
 								/>
 							</Routes>
