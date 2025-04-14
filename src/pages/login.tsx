@@ -9,11 +9,10 @@ import styles from './profile.module.css';
 
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { profileLogin } from '../services/profile';
 
 import { useForm } from '../hooks/useForm';
-import { RootState, AppDispatch } from '../index';
+import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
 
 interface IloginInput {
 	email: string;
@@ -21,8 +20,8 @@ interface IloginInput {
 }
 
 export function Login() {
-	const { email, authorized, loading, errorTxt } = useSelector(
-		(store: RootState) => store.profile
+	const { email, authorized, loading, errorTxt } = useSelectorTp(
+		(state) => state.profile
 	);
 
 	const { values, handleChange, setValues } = useForm<IloginInput>({
@@ -30,7 +29,7 @@ export function Login() {
 		password: '',
 	});
 
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatchTp();
 
 	const state = useLocation().state;
 	const navigate = useNavigate();

@@ -1,15 +1,19 @@
 import styles from './burger-constructor-dlg.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { orderCreate } from '../../services/order';
 
 import { useEffect } from 'react';
-import { RootState, AppDispatch } from '../../index';
+import {
+	RootState,
+	AppDispatch,
+	useSelectorTp,
+	useDispatchTp,
+} from '../../index';
 
 export const FinishOrderDlg = () => {
-	const order = useSelector((store: RootState) => store.order);
-	const dispatch = useDispatch<AppDispatch>();
+	const order = useSelectorTp((state) => state.order);
+	const dispatch = useDispatchTp();
 
 	useEffect(() => dispatch(orderCreate()), []);
 

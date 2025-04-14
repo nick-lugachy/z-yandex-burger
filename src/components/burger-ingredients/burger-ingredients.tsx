@@ -11,9 +11,13 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Ingredient } from '../ingrediedt-card/ingrediedt-card';
 
-import { useSelector } from 'react-redux';
 import { Iingredient } from '../../services/types';
-import { RootState } from '../../index';
+import {
+	RootState,
+	AppDispatch,
+	useSelectorTp,
+	useDispatchTp,
+} from '../../index';
 
 const ItemGroups = [
 	{ id: 'bun', name: 'Булки' },
@@ -52,8 +56,8 @@ export function BurgerIngredients() {
 		);
 	}, []);
 
-	const data: Array<Iingredient> = useSelector(
-		(state: RootState) => state.ingredients.data
+	const data: Array<Iingredient> = useSelectorTp(
+		(state) => state.ingredients.data
 	);
 
 	const tabClic = (tab: string) => {

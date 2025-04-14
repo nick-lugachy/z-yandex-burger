@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { requestGET, requestPOST, FetchWithToken } from '../utils';
 
-import { RootState, AppDispatch } from '../index';
+import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
 
 const ep = 'profile';
 const epForgot = 'password-reset';

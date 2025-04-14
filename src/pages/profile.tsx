@@ -18,17 +18,18 @@ import {
 	setEmail,
 } from '../services/profile';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { Feed } from '../components/feed/feed';
+import { OrderCardDlg } from '../components/feed-order-dlg/feed-order-dlg';
 
 import { useForm } from '../hooks/useForm';
-import { RootState, AppDispatch } from '../index';
+import { useSelectorTp, useDispatchTp } from '../index';
 
 export function Profile() {
-	const { email, name, loading, errorTxt } = useSelector(
-		(store: RootState) => store.profile
+	const { email, name, loading, errorTxt } = useSelectorTp(
+		(state) => state.profile
 	);
 
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatchTp();
 	const refName = useRef<HTMLInputElement>(null);
 
 	const { values, handleChange, setValues } = useForm({
@@ -158,7 +159,10 @@ export function Profile() {
 						</div>
 					}
 				/>
-				<Route path='history' element={<h1> HISTORY </h1>} />
+
+				<Route path='history/:orderId' element={<OrderCardDlg />} />
+
+				<Route path='history' element={<Feed showByUser={true} />} />
 			</Routes>
 		</form>
 	);

@@ -6,7 +6,7 @@ const ep = `orders`;
 import { requestPOST, FetchWithToken } from '../utils';
 
 import { IBurgerArr, IburgerElement, Iingredient } from '../services/types';
-import { RootState, AppDispatch } from '../index';
+import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
 
 const initialState = {
 	showDlg: false,

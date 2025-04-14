@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { v4 as uuidv4 } from 'uuid';
 import { IBurgerArr, IburgerElement, Iingredient } from '../services/types';
-import { RootState, AppDispatch } from '../index';
+import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
 
 const initialState: IBurgerArr = {
 	bun: null,
