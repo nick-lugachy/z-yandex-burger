@@ -4,18 +4,13 @@ import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-component
 import { orderCreate } from '../../services/order';
 
 import { useEffect } from 'react';
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp, useDispatchTp } from '../../index';
 
 export const FinishOrderDlg = () => {
 	const order = useSelectorTp((state) => state.order);
 	const dispatch = useDispatchTp();
 
-	useEffect(() => dispatch(orderCreate()), []);
+	useEffect(() => dispatch(orderCreate()), [dispatch]);
 
 	return (
 		<>

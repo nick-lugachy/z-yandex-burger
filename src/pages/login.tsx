@@ -4,7 +4,7 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './profile.module.css';
 
 import { useNavigate, Link, useLocation } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { profileLogin } from '../services/profile';
 
 import { useForm } from '../hooks/useForm';
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { useSelectorTp, useDispatchTp } from '../index';
 
 interface IloginInput {
 	email: string;
@@ -20,11 +20,11 @@ interface IloginInput {
 }
 
 export function Login() {
-	const { email, authorized, loading, errorTxt } = useSelectorTp(
+	const { email, authorized, loading } = useSelectorTp(
 		(state) => state.profile
 	);
 
-	const { values, handleChange, setValues } = useForm<IloginInput>({
+	const { values, handleChange } = useForm<IloginInput>({
 		email,
 		password: '',
 	});
@@ -42,7 +42,7 @@ export function Login() {
 				navigate('/');
 			}
 		}
-	}, [authorized]);
+	}, [authorized, navigate, state]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

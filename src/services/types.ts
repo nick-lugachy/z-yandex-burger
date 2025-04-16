@@ -1,4 +1,4 @@
-type Nullable<T> = { [K in keyof T]: T[K] | null };
+//type Nullable<T> = { [K in keyof T]: T[K] | null };
 
 export interface Iingredient {
 	_id: string;

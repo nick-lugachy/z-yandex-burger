@@ -5,15 +5,14 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useState, useRef } from 'react';
 import styles from './profile.module.css';
 
 import { Navigate, Link } from 'react-router-dom';
 
-import { profileRegUser, setEmail, setName } from '../services/profile';
+import { profileRegUser } from '../services/profile';
 
 import { useForm } from '../hooks/useForm';
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { useSelectorTp, useDispatchTp } from '../index';
 
 interface IregInput {
 	email: string;
@@ -24,24 +23,19 @@ interface IregInput {
 export function Register() {
 	const { authorized } = useSelectorTp((state) => state.profile);
 
-	const { values, handleChange, setValues } = useForm<IregInput>({
+	const { values, handleChange } = useForm<IregInput>({
 		email: '',
 		name: '',
 		password: '',
 	});
 
-	if (authorized) {
-		return <Navigate to='/profile' replace />;
-	}
-
 	const dispatch = useDispatchTp();
 
 	const { loading, errorTxt } = useSelectorTp((state) => state.profile);
 
-	//	const [name, setName] = useState('');
-	//	const [login, setLogin] = useState('');
-	const [password, setPassword] = useState('');
-	const refName = useRef();
+	if (authorized) {
+		return <Navigate to='/profile' replace />;
+	}
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { clearIngredient } from './constructor';
-const ep = `orders`;
+const ep = 'orders';
 
-import { requestPOST, FetchWithToken } from '../utils';
+import { FetchWithToken } from '../utils';
 
-import { IBurgerArr, IburgerElement, Iingredient } from '../services/types';
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { IburgerElement } from './types';
+import { AppDispatch, RootState } from '../index';
 
 const initialState = {
 	showDlg: false,
@@ -52,11 +52,11 @@ const slice = createSlice({
 });
 
 export function orderFillArr() {
-	return (dispatch: AppDispatch, getState: Function) => {
+	return (dispatch: AppDispatch, getState: () => RootState) => {
 		const state = getState();
 		const burger = state.burgerConstructor;
 
-		let arr = [];
+		const arr = [];
 		if (burger.bun) {
 			arr.push(burger.bun._id);
 			burger.ingredients.map((I: IburgerElement) => arr.push(I._id));
@@ -68,7 +68,7 @@ export function orderFillArr() {
 }
 
 export const orderCreate =
-	() => (dispatch: AppDispatch, getState: Function) => {
+	() => (dispatch: AppDispatch, getState: () => RootState) => {
 		dispatch(orderFillArr());
 		dispatch(orderFetching());
 

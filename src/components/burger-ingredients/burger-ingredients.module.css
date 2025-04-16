@@ -1,7 +1,7 @@
 .panel {
 	display: inline-block;
 	gap: 10px;
-	margin: 0px 20px;
+	margin: 0 20px;
 	scroll-behavior: smooth;
 }
 
@@ -12,20 +12,21 @@
 }
 
 .scroll {
+	max-height: 700px;
 	overflow-y: scroll;
 	scroll-behavior: smooth;
 	scrollbar-width: thin;
-	max-height: 700px;
 }
+
 .ingredientGrid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 0px 8px;
+	gap: 0 8px;
 	padding: 0 8px;
 }
 
 .counter {
 	position: absolute;
-	right: 0;
 	top: 0;
+	right: 0;
 }

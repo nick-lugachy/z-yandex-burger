@@ -1,23 +1,18 @@
 import { useEffect } from 'react';
 import styles from './feed.module.css';
 
-import { connect, disconnect, onMessage } from '../../services/feed';
+import { connect, disconnect } from '../../services/feed';
 
 import { OrderCard } from '../feed-order-card/feed-order-card';
 
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp, useDispatchTp } from '../../index';
 
-import { IFeedOrder, IFeedData } from '../../services/types';
+import { IFeedOrder } from '../../services/types';
 
-let ep: string = ``;
+let ep = '';
 
 export function Feed(props: { showByUser?: boolean }) {
-	ep = props.showByUser ? `` : `/all`;
+	ep = props.showByUser ? '' : '/all';
 
 	const { success, orders } = useSelectorTp((state) => state.feed.orders);
 
@@ -28,10 +23,7 @@ export function Feed(props: { showByUser?: boolean }) {
 		return () => {
 			dispatch(disconnect());
 		};
-	}, []);
-
-	let i = 0;
-	let summ = 0;
+	}, [dispatch]);
 
 	return (
 		<div className={styles.orderList}>

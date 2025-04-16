@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { requestGET, requestPOST, FetchWithToken } from '../utils';
+import { requestPOST, FetchWithToken } from '../utils';
 
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { AppDispatch, RootState } from '../index';
 
 const ep = 'profile';
 const epForgot = 'password-reset';
@@ -10,7 +10,7 @@ const epRegister = 'auth/register';
 const epLogin = 'auth/login';
 const epLogout = 'auth/logout';
 const epUser = 'auth/user';
-const epReset = `password-reset/reset`;
+const epReset = 'password-reset/reset';
 
 const initialState = {
 	email: '',
@@ -68,7 +68,7 @@ const slice = createSlice({
 			state.loading = false;
 		},
 
-		forgotFetched: (state, action) => {
+		forgotFetched: (state) => {
 			state.loading = false;
 			state.hasError = false;
 			state.errorTxt = '';
@@ -97,17 +97,16 @@ export const profileRegUser =
 			});
 	};
 
-export const profileLogin =
-	(parm: Object) => async (dispatch: AppDispatch, getState: Function) => {
-		dispatch(profileFetching());
-		return requestPOST(epLogin, parm)
-			.then((data) => {
-				dispatch(LoginFetched(data));
-			})
-			.catch((err) => {
-				dispatch(profFetcError(err));
-			});
-	};
+export const profileLogin = (parm: Object) => async (dispatch: AppDispatch) => {
+	dispatch(profileFetching());
+	return requestPOST(epLogin, parm)
+		.then((data) => {
+			dispatch(LoginFetched(data));
+		})
+		.catch((err) => {
+			dispatch(profFetcError(err));
+		});
+};
 
 export const resetPassword =
 	(password: string, token: string) => async (dispatch: AppDispatch) => {
@@ -138,7 +137,8 @@ export const profileLogout = () => async (dispatch: AppDispatch) => {
 };
 
 export const patchUserInfo =
-	(password: string) => async (dispatch: AppDispatch, getState: Function) => {
+	(password: string) =>
+	async (dispatch: AppDispatch, getState: () => RootState) => {
 		const profile = getState().profile;
 		dispatch(profileFetching());
 
@@ -157,7 +157,7 @@ export const patchUserInfo =
 
 export const getUserInfo =
 	(callback?: Function) =>
-	async (dispatch: AppDispatch, getState: Function) => {
+	async (dispatch: AppDispatch, getState: () => RootState) => {
 		if (!getState().profile.loading) {
 			dispatch(profileFetching());
 
@@ -173,7 +173,8 @@ export const getUserInfo =
 	};
 
 export const profileSendEmail =
-	(callback: Function) => async (dispatch: AppDispatch, getState: Function) => {
+	(callback: Function) =>
+	async (dispatch: AppDispatch, getState: () => RootState) => {
 		const state = getState().profile;
 
 		dispatch(profileFetching());
