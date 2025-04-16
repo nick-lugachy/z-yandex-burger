@@ -1,9 +1,9 @@
 .header {
-	vertical-align: top;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	width: 100%;
+	vertical-align: top;
 }
 
 .button {
@@ -15,10 +15,10 @@
 }
 
 .logo {
-	height: 56px;
-	vertical-align: middle;
 	flex-grow: 1;
+	height: 56px;
 	margin: 16px;
+	vertical-align: middle;
 }
 
 .logo:hover {
@@ -26,8 +26,8 @@
 }
 
 .icon {
-	vertical-align: middle;
 	margin-right: 8px;
+	vertical-align: middle;
 }
 
 .page {

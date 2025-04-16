@@ -1,7 +1,7 @@
 import s from './header.module.css';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {
+	Logo,
+	Button,
 	BurgerIcon,
 	ListIcon,
 	ProfileIcon,

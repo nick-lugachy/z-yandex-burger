@@ -1,22 +1,17 @@
 //import { Key } from 'react';
 import styles from './feed-order-card.module.css';
 
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+	FormattedDate,
+	CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useLocation, Link } from 'react-router-dom';
 
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp } from '../../index';
 
 import { Iingredient, IFeedOrder } from '../../services/types';
 
-const url: string = `wss://norma.nomoreparties.space/orders/all`;
-const ingStep = 48;
 const ingMax = 6;
 
 export function OrderCard({
@@ -32,15 +27,13 @@ export function OrderCard({
 		(state) => state.ingredients.data
 	);
 
-	const dispatch = useDispatchTp();
-
 	let i = 0;
 	let summ = 0;
 	let ingExtra = '';
-	let imgArr: Array<string> = [];
+	const imgArr: Array<string> = [];
 
-	order.ingredients.map((id: String) => {
-		let ing: Iingredient | undefined = ingredients.find(
+	order.ingredients.map((id: string) => {
+		const ing: Iingredient | undefined = ingredients.find(
 			(ing: Iingredient) => id === ing._id
 		);
 		if (!ing) return;
@@ -85,7 +78,7 @@ export function OrderCard({
 					<p className='mt-2  text text_type_main-small'>{status}</p>
 				)}
 				<div className={styles.contentContainer}>
-					{imgArr.map((src: String) => {
+					{imgArr.map((src: string) => {
 						i--;
 						return (
 							<span

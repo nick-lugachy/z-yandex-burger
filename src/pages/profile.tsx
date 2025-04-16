@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useRef, useEffect } from 'react';
-import { Routes, Route, useMatch, useNavigate, Link } from 'react-router-dom';
+import { Routes, Route, useMatch, Link } from 'react-router-dom';
 
 import styles from './profile.module.css';
 
@@ -25,9 +25,7 @@ import { useForm } from '../hooks/useForm';
 import { useSelectorTp, useDispatchTp } from '../index';
 
 export function Profile() {
-	const { email, name, loading, errorTxt } = useSelectorTp(
-		(state) => state.profile
-	);
+	const { email, name, loading } = useSelectorTp((state) => state.profile);
 
 	const dispatch = useDispatchTp();
 	const refName = useRef<HTMLInputElement>(null);
@@ -55,7 +53,6 @@ export function Profile() {
 		}
 	};
 
-	const navigate = useNavigate();
 	const isHistoryPath = useMatch('/profile/history/*') != null;
 	const ActiveMenu = (enable: boolean) => {
 		return enable

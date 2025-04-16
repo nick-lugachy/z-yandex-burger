@@ -12,12 +12,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Ingredient } from '../ingrediedt-card/ingrediedt-card';
 
 import { Iingredient } from '../../services/types';
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp } from '../../index';
 
 const ItemGroups = [
 	{ id: 'bun', name: 'Булки' },
@@ -76,7 +71,7 @@ export function BurgerIngredients() {
 		<section className={styles.panel}>
 			<h1 className='text text_type_main-large mt-10 mb-5'>Соберите бургер</h1>
 			<div className={styles.tabBar}>
-				{ItemGroups.map((group, i) => (
+				{ItemGroups.map((group) => (
 					<Tab
 						key={group.id}
 						value={group.id}

@@ -1,75 +1,75 @@
 .orderCard {
-	border-radius: 20px;
-	background-color: var(--background);
+	width: 600px;
 	margin-top: 16px;
 	padding: 24px;
-	width: 600px;
 	color: var(--text-primary-color);
+	background-color: var(--background);
+	border-radius: 20px;
 }
 
 .orderId {
-	display: flex;
-	align-items: space-between;
-	justify-content: space-between;
 	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: space-between;
 }
 
 .contentContainer {
-	height: 64px;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
 	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	height: 64px;
 	margin-top: 24px;
 }
 
 .iconGradient {
-	width: 64px;
-	height: 64px;
-	border-radius: 100%;
-	background: linear-gradient(45deg, #801ab2, #4c4cff);
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	position: absolute;
 	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 64px;
+	height: 64px;
+	background: linear-gradient(45deg, #801ab2, #4c4cff);
+	border-radius: 100%;
 }
 
 .iconFrame {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 60px;
 	height: 60px;
-	border-radius: 100%;
-	border: 2px transparent;
 	background: black;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	border: 2px transparent;
+	border-radius: 100%;
 }
 
 .icon {
-	height: 55px;
 	width: 55px;
-	border-radius: 100%;
+	height: 55px;
 	background-position: center;
 	background-size: cover;
+	border-radius: 100%;
 }
 
 .ingExtra {
-	height: 55px;
-	width: 55px;
-	border-radius: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.6);
+	align-items: center;
+	width: 55px;
+	height: 55px;
+	background-color: rgb(0 0 0 / 60%);
+	border-radius: 100%;
 }
 
 .amountFrame {
-	width: 128px;
-	height: 64px;
-	display: flex;
-	align-items: center;
-	justify-content: right;
 	position: absolute;
 	top: 0;
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	width: 128px;
+	height: 64px;
 }

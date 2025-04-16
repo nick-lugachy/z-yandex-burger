@@ -5,7 +5,7 @@ export const useForm = <T,>(
 ): {
 	values: T;
 	handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	setValues: Function;
+	setValues: (name: T) => void;
 } => {
 	const [values, setValues] = useState<T>(inputValues);
 

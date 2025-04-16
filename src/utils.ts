@@ -14,15 +14,15 @@ export function checkResponse(res: Response) {
 
 export async function requestGET(endpoint: string, token?: string) {
 	return token === undefined
-		? fetch(BASE_URL + `/` + endpoint).then(checkResponse)
-		: fetch(BASE_URL + `/` + endpoint, {
+		? fetch(BASE_URL + '/' + endpoint).then(checkResponse)
+		: fetch(BASE_URL + '/' + endpoint, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json', authorization: token },
 		  }).then(checkResponse);
 }
 
 export async function requestPOST(endpoint: string, parm: object) {
-	return fetch(BASE_URL + `/` + endpoint, {
+	return fetch(BASE_URL + '/' + endpoint, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(parm),
@@ -47,7 +47,7 @@ export async function FetchWithToken(
 	parm?: object
 ) {
 	const body = parm ? { body: JSON.stringify(parm) } : '';
-	const url = BASE_URL + `/` + endpoint;
+	const url = BASE_URL + '/' + endpoint;
 	const header = (token: string) => {
 		return {
 			method: method,
