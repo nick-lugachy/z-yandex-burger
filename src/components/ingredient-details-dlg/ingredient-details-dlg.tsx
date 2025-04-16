@@ -1,12 +1,7 @@
 import styles from './ingredient-details-dlg.module.css';
 
 import { useParams } from 'react-router-dom';
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp } from '../../index';
 import { Iingredient } from '../../services/types';
 
 export const IngredientDlg = ({ header }: { header?: string }) => {
@@ -14,9 +9,9 @@ export const IngredientDlg = ({ header }: { header?: string }) => {
 		(state) => state.ingredients.data || []
 	);
 
-	const ingredient = data
-		? data.find((Item) => useParams().ingId === Item._id)
-		: null;
+	const ingId = useParams().ingId;
+
+	const ingredient = data ? data.find((Item) => ingId === Item._id) : null;
 
 	return (
 		ingredient && (

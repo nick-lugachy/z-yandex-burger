@@ -1,12 +1,12 @@
 import { useMemo, useRef, LegacyRef } from 'react';
 import styles from './burger-constructor.module.css';
 
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import {
+	ConstructorElement,
 	CurrencyIcon,
 	DragIcon,
+	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -18,12 +18,7 @@ import {
 } from '../../services/constructor';
 
 import { IBurgerArr, IburgerElement } from '../../services/types';
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp, useDispatchTp } from '../../index';
 
 interface IdragItem {
 	id: string;
@@ -41,7 +36,7 @@ function Element(props: IburgerElement) {
 		},
 	});
 
-	const [{ isHover, delta }, dropRef] = useDrop({
+	const [{ isHover }, dropRef] = useDrop({
 		accept: 'ingredient',
 		drop(item: IdragItem) {
 			dispatch(

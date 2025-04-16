@@ -1,12 +1,7 @@
 import { Feed } from './feed';
 import styles from './feed.module.css';
 
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp } from '../../index';
 import { IFeedOrder } from '../../services/types';
 
 export const FeedPage = () => {

@@ -2,13 +2,16 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './components/app/app';
 import './styles.css';
-import { Provider } from 'react-redux';
-
-import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux';
+import {
+	Provider,
+	useSelector,
+	useDispatch,
+	TypedUseSelectorHook,
+} from 'react-redux';
 
 import { burgerConstructor } from './services/constructor';
 import { ingredients } from './services/ingredients';
-import { ingredientDetail } from './services/ingredient-detail';
+//import { ingredientDetail } from './services/ingredient-detail';
 import { order } from './services/order';
 import { profile } from './services/profile';
 
@@ -43,7 +46,7 @@ const store = configureStore({
 	reducer: {
 		burgerConstructor,
 		ingredients,
-		ingredientDetail,
+		//		ingredientDetail,
 		order,
 		profile,
 		feed,

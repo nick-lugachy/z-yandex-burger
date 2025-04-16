@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { v4 as uuidv4 } from 'uuid';
-import { IBurgerArr, IburgerElement, Iingredient } from '../services/types';
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { IBurgerArr, IburgerElement, Iingredient } from './types';
+import { AppDispatch } from '../index';
 
-const initialState: IBurgerArr = {
+export const initialState: IBurgerArr = {
 	bun: null,
 	ingredients: [],
 };
@@ -18,7 +18,7 @@ const slice = createSlice({
 			if (ingredient.type === 'bun') {
 				state.bun = ingredient;
 			} else {
-				let newMap = [];
+				const newMap = [];
 				let inserted = false;
 
 				if (destGuid === 'top') inserted = newMap.push(ingredient) != 0;

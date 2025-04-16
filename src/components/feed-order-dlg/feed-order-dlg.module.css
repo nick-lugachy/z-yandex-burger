@@ -1,82 +1,82 @@
 .orderCard {
-	border-radius: 20px;
-	background-color: var(--background);
+	width: 600px;
 	margin-top: 16px;
 	padding: 24px;
-	width: 600px;
 	text-align: left;
+	background-color: var(--background);
+	border-radius: 20px;
 }
 
 .bottom {
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
+	align-items: center;
 	margin-top: 40px;
 }
 
 .burgerContent {
+	max-height: 300px;
 	overflow-y: auto;
 	scrollbar-width: thin;
-	max-height: 300px;
 }
 
 .ingredient {
 	display: flex;
 	align-items: center;
-	margin: 8px 0px;
+	margin: 8px 0;
 	padding-right: 24px;
 }
 
 .contentContainer {
-	height: 64px;
 	display: flex;
-	align-items: flex-start;
 	justify-content: flex-start;
+	align-items: flex-start;
+	height: 64px;
 	margin-top: 24px;
 }
 
 .iconGradient {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 64px;
 	height: 64px;
-	border-radius: 100%;
 	background: linear-gradient(45deg, #801ab2, #4c4cff);
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	border-radius: 100%;
 }
 
 .iconFrame {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 60px;
 	height: 60px;
-	border-radius: 100%;
-	border: 2px transparent;
 	background: black;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	border: 2px transparent;
+	border-radius: 100%;
 }
 
 .icon {
-	height: 55px;
 	width: 55px;
-	border-radius: 100%;
+	height: 55px;
 	background-position: center;
 	background-size: cover;
+	border-radius: 100%;
 }
 
 .ingExtra {
-	height: 55px;
-	width: 55px;
-	border-radius: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.6);
+	align-items: center;
+	width: 55px;
+	height: 55px;
+	background-color: rgb(0 0 0 / 60%);
+	border-radius: 100%;
 }
 
 .amountFrame {
-	width: 128px;
 	display: flex;
-	align-items: center;
 	justify-content: right;
+	align-items: center;
+	width: 128px;
 }

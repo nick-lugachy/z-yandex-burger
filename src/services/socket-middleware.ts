@@ -3,8 +3,8 @@ import {
 	ActionCreatorWithPayload,
 	Middleware,
 } from '@reduxjs/toolkit';
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
-import { refreshToken, FetchWithToken } from '../utils';
+import { RootState } from '../index';
+import { refreshToken } from '../utils';
 
 type WsActions<R, S> = {
 	connect: ActionCreatorWithPayload<string>;
@@ -23,7 +23,7 @@ export const RECONNECT_PERIOD = 3000;
 
 export const socketMiddleware = <R, S>(
 	wsActions: WsActions<R, S>,
-	withTokenRefresh: boolean = false
+	withTokenRefresh = false
 ): Middleware<Record<string, never>, RootState> => {
 	return (store) => {
 		let socket: WebSocket | null = null;

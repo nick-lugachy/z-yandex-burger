@@ -1,12 +1,12 @@
 .section {
-	margin: 100px 20px 0px 20px;
+	margin: 100px 20px 0;
 	padding: 0 16px;
 }
 
 .scrollSection {
-	max-height: 480px;
 	display: flex;
 	flex-direction: column;
+	max-height: 480px;
 	overflow-y: scroll;
 	scroll-behavior: smooth;
 	scrollbar-width: thin;
@@ -28,14 +28,14 @@
 }
 
 .icon {
-	vertical-align: middle;
-	margin: 16px 40px 16px 8px;
 	height: 100%;
+	margin: 16px 40px 16px 8px;
+	vertical-align: middle;
 }
 
 .total {
 	display: flex;
 	justify-content: flex-end;
-	vertical-align: middle;
 	margin: 24px;
+	vertical-align: middle;
 }

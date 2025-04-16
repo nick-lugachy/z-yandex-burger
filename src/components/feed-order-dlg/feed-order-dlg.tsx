@@ -1,18 +1,14 @@
 import { useEffect } from 'react';
 import styles from './feed-order-dlg.module.css';
 
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+	FormattedDate,
+	CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useSelectorTp, useDispatchTp } from '../../index';
 
 import { Iingredient, IFeedOrder } from '../../services/types';
 import { fetchOrder, exOrderFetched } from '../../services/feed';
@@ -29,11 +25,9 @@ export function OrderCardDlg() {
 	//	let order: IFeedOrder | undefined;
 	const orderId: string | undefined = useParams().orderId;
 
-	if (!orderId) return;
-
 	const { orders } = useSelectorTp((state) => state.feed.orders);
 
-	let order = useSelectorTp((state) => state.feed.extraOrder);
+	const order = useSelectorTp((state) => state.feed.extraOrder);
 
 	const dispatch = useDispatchTp();
 
@@ -55,15 +49,17 @@ export function OrderCardDlg() {
 		if (!order) {
 			dispatch(fetchOrder('orders/' + orderId));
 		}
-	}, [order]);
+	}, [order, dispatch, orderId, orders]);
+
+	if (!orderId) return;
 
 	if (!order || !ingredients) return;
 
 	let summ = 0;
-	let ingArr: Array<IIng> = [];
+	const ingArr: Array<IIng> = [];
 
-	order.ingredients.map((id: String) => {
-		let ing: Iingredient | undefined = ingredients.find(
+	order.ingredients.map((id: string) => {
+		const ing: Iingredient | undefined = ingredients.find(
 			(ing: Iingredient) => id === ing._id
 		);
 		if (!ing) return;

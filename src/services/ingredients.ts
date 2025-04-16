@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { requestGET } from '../utils';
 import { AppDispatch } from '../index';
 
-const ep = `ingredients`;
+const ep = 'ingredients';
 
-const initialState = {
+export const initialState = {
 	data: [],
 	loading: false,
 	hasError: false,
@@ -38,9 +38,11 @@ export const fetchIngredients = () => (dispatch: AppDispatch) => {
 	dispatch(ingredientsFetching());
 	return requestGET(ep)
 		.then((data) => dispatch(ingredientsFetched(data.data)))
-		.catch((err) => {
+		.catch((err: Error) => {
 			dispatch(
-				ingredientsFetchingError('большая Ошибка при загрузке данных...')
+				ingredientsFetchingError(
+					'большая Ошибка при загрузке данных...' + err.message
+				)
 			);
 		});
 };

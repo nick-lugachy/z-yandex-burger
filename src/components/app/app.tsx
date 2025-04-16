@@ -24,12 +24,7 @@ import { FeedPage } from '../feed/feed-page';
 import { fetchIngredients } from '../../services/ingredients';
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import {
-	RootState,
-	AppDispatch,
-	useSelectorTp,
-	useDispatchTp,
-} from '../../index';
+import { useDispatchTp } from '../../index';
 
 export const App = () => {
 	const dispatch = useDispatchTp();
@@ -44,7 +39,7 @@ export const App = () => {
 
 	useEffect(() => {
 		dispatch(fetchIngredients());
-	}, []);
+	}, [dispatch]);
 
 	const Main = () => (
 		<main className={styles.main}>

@@ -60,8 +60,8 @@ const slice = createSlice({
 export const fetchOrder = (ep: string) => (dispatch: AppDispatch) => {
 	return requestGET(ep)
 		.then((data) => dispatch(exOrderFetched(data.orders[0])))
-		.catch((err) => {
-			dispatch(onError('большая Ошибка при загрузке данных...'));
+		.catch((err: Error) => {
+			dispatch(onError('большая Ошибка при загрузке данных...' + err.message));
 		});
 };
 

@@ -1,10 +1,12 @@
 import styles from './ingrediedt-card.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+	CurrencyIcon,
+	Counter,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDrag } from 'react-dnd';
 import { useLocation, Link } from 'react-router-dom';
-import { useSelectorTp, useDispatchTp } from '../../index';
+import { useSelectorTp } from '../../index';
 import { Iingredient, IBurgerArr } from '../../services/types';
 
 export const Ingredient = (props: Iingredient) => {
@@ -19,7 +21,7 @@ export const Ingredient = (props: Iingredient) => {
 
 	const data: IBurgerArr = useSelectorTp((state) => state.burgerConstructor);
 
-	let count: number = 0;
+	let count = 0;
 
 	if (data.bun !== null) {
 		if (props._id === data.bun._id) {

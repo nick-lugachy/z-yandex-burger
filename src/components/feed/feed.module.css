@@ -1,16 +1,16 @@
 .orderList {
+	max-height: 800px;
 	overflow: auto;
 	overflow-y: scroll;
 	scroll-behavior: smooth;
 	scrollbar-width: thin;
-	max-height: 800px;
 }
 
 .statusView {
-	column-count: 2;
-	max-height: 250px;
 	gap: 24px;
+	max-height: 250px;
 	overflow: hidden;
+	column-count: 2;
 }
 
 .statusSection {
@@ -21,9 +21,9 @@
 
 .main {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 60px;
 	display: flex;
-	align-items: center;
+	grid-template-columns: 1fr 1fr;
 	justify-content: center;
+	align-items: center;
+	gap: 60px;
 }

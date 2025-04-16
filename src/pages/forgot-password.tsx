@@ -8,19 +8,19 @@ import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import { profileSendEmail, setEmail } from '../services/profile';
 
-import { RootState, AppDispatch, useSelectorTp, useDispatchTp } from '../index';
+import { useSelectorTp, useDispatchTp } from '../index';
 
 export function ForgotPassword() {
-	const { email, loading, hasError, errorTxt, authorized } = useSelectorTp(
+	const { email, loading, errorTxt, authorized } = useSelectorTp(
 		(state) => state.profile
 	);
+
+	const dispatch = useDispatchTp();
+	const navigate = useNavigate();
 
 	if (authorized) {
 		return <Navigate to='/profile' replace />;
 	}
-
-	const dispatch = useDispatchTp();
-	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
