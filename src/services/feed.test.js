@@ -7,17 +7,22 @@ import {
 	onMessage,
 	exOrderFetched,
 	WebsocketStatus,
+	initialState,
 } from './feed';
 
 import { data } from '../app/data.js';
 
+const sampleOrders = {
+	success: true,
+	orders: data,
+	total: 1024,
+	totalToday: 48,
+};
+
 describe('feed reducer', () => {
 	it('should return the initial state', () => {
 		expect(feed(undefined, {})).toEqual({
-			status: WebsocketStatus.OFFLINE,
-			orders: { success: false, orders: [], total: 0, totalToday: 0 },
-			error: null,
-			extraOrder: undefined,
+			...initialState,
 		});
 	});
 
@@ -27,10 +32,8 @@ describe('feed reducer', () => {
 				type: onOpen,
 			})
 		).toEqual({
+			...initialState,
 			status: WebsocketStatus.ONLINE,
-			orders: { success: false, orders: [], total: 0, totalToday: 0 },
-			error: null,
-			extraOrder: undefined,
 		});
 	});
 
@@ -40,10 +43,8 @@ describe('feed reducer', () => {
 				type: onConnecting,
 			})
 		).toEqual({
+			...initialState,
 			status: WebsocketStatus.CONNECTING,
-			orders: { success: false, orders: [], total: 0, totalToday: 0 },
-			error: null,
-			extraOrder: undefined,
 		});
 	});
 
@@ -53,10 +54,7 @@ describe('feed reducer', () => {
 				type: onClose,
 			})
 		).toEqual({
-			status: WebsocketStatus.OFFLINE,
-			orders: { success: false, orders: [], total: 0, totalToday: 0 },
-			error: null,
-			extraOrder: undefined,
+			...initialState,
 		});
 	});
 
@@ -67,10 +65,8 @@ describe('feed reducer', () => {
 				payload: 'some error',
 			})
 		).toEqual({
-			status: WebsocketStatus.OFFLINE,
-			orders: { success: false, orders: [], total: 0, totalToday: 0 },
+			...initialState,
 			error: 'some error',
-			extraOrder: undefined,
 		});
 	});
 
@@ -78,13 +74,11 @@ describe('feed reducer', () => {
 		expect(
 			feed(undefined, {
 				type: onMessage,
-				payload: { success: true, orders: data, total: 0, totalToday: 0 },
+				payload: sampleOrders,
 			})
 		).toEqual({
-			status: WebsocketStatus.OFFLINE,
-			orders: { success: true, orders: data, total: 0, totalToday: 0 },
-			error: null,
-			extraOrder: undefined,
+			...initialState,
+			orders: sampleOrders,
 		});
 	});
 
@@ -95,9 +89,7 @@ describe('feed reducer', () => {
 				payload: data[0],
 			})
 		).toEqual({
-			status: WebsocketStatus.OFFLINE,
-			orders: { success: false, orders: [], total: 0, totalToday: 0 },
-			error: null,
+			...initialState,
 			extraOrder: data[0],
 		});
 	});

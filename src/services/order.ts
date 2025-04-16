@@ -8,7 +8,7 @@ import { FetchWithToken } from '../utils';
 import { IburgerElement } from './types';
 import { AppDispatch, RootState } from '../index';
 
-const initialState = {
+export const initialState = {
 	showDlg: false,
 	orderId: '',
 	loading: true,

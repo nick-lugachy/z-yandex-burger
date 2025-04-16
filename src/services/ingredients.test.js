@@ -3,6 +3,7 @@ import {
 	ingredientsFetched,
 	ingredientsFetchingError,
 	ingredients,
+	initialState,
 } from './ingredients';
 
 import { data } from '../app/data.js';
@@ -10,10 +11,7 @@ import { data } from '../app/data.js';
 describe('ingredients reducer', () => {
 	it('should return the initial state', () => {
 		expect(ingredients(undefined, {})).toEqual({
-			data: [],
-			loading: false,
-			hasError: false,
-			errorTxt: null,
+			...initialState,
 		});
 	});
 
@@ -23,10 +21,8 @@ describe('ingredients reducer', () => {
 				type: ingredientsFetching,
 			})
 		).toEqual({
-			data: [],
+			...initialState,
 			loading: true,
-			hasError: false,
-			errorTxt: null,
 		});
 	});
 
@@ -37,10 +33,8 @@ describe('ingredients reducer', () => {
 				payload: data,
 			})
 		).toEqual({
+			...initialState,
 			data: data,
-			loading: false,
-			hasError: false,
-			errorTxt: null,
 		});
 	});
 
@@ -51,8 +45,7 @@ describe('ingredients reducer', () => {
 				payload: { error: 'some error' },
 			})
 		).toEqual({
-			data: [],
-			loading: false,
+			...initialState,
 			hasError: true,
 			errorTxt: 'some error',
 		});

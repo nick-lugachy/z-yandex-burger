@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { IBurgerArr, IburgerElement, Iingredient } from './types';
 import { AppDispatch } from '../index';
 
-const initialState: IBurgerArr = {
+export const initialState: IBurgerArr = {
 	bun: null,
 	ingredients: [],
 };

@@ -5,18 +5,13 @@ import {
 	orderFetching,
 	orderFetched,
 	orderFetchingError,
+	initialState,
 } from './order';
 
 describe('Order Service', () => {
 	it('should return the initial state', () => {
 		expect(order(undefined, {})).toEqual({
-			showDlg: false,
-			orderId: '',
-			loading: true,
-			hasError: false,
-			description: '',
-			ingredientArr: [],
-			amount: 0,
+			...initialState,
 		});
 	});
 
@@ -26,13 +21,10 @@ describe('Order Service', () => {
 				type: orderFetching,
 			})
 		).toEqual({
-			showDlg: false,
+			...initialState,
 			orderId: 'WAIT..',
 			loading: true,
-			hasError: false,
 			description: 'Ожидаем подтверждения заказа..',
-			ingredientArr: [],
-			amount: 0,
 		});
 	});
 
@@ -43,13 +35,10 @@ describe('Order Service', () => {
 				payload: { order: { number: '123' } },
 			})
 		).toEqual({
-			showDlg: false,
+			...initialState,
 			orderId: '123',
 			loading: false,
-			hasError: false,
 			description: 'Ваш заказ начали готовить',
-			ingredientArr: [],
-			amount: 0,
 		});
 	});
 
@@ -60,13 +49,11 @@ describe('Order Service', () => {
 				payload: 'some error',
 			})
 		).toEqual({
-			showDlg: false,
+			...initialState,
 			orderId: 'ERROR',
 			loading: false,
 			hasError: true,
 			description: 'some error',
-			ingredientArr: [],
-			amount: 0,
 		});
 	});
 	it('should handle orderUpdAmount', () => {
@@ -76,12 +63,7 @@ describe('Order Service', () => {
 				payload: 123,
 			})
 		).toEqual({
-			showDlg: false,
-			orderId: '',
-			loading: true,
-			hasError: false,
-			description: '',
-			ingredientArr: [],
+			...initialState,
 			amount: 123,
 		});
 	});
@@ -93,13 +75,8 @@ describe('Order Service', () => {
 				payload: [123, 456, 789],
 			})
 		).toEqual({
-			showDlg: false,
-			orderId: '',
-			loading: true,
-			hasError: false,
-			description: '',
+			...initialState,
 			ingredientArr: [123, 456, 789],
-			amount: 0,
 		});
 	});
 });

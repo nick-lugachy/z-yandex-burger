@@ -8,17 +8,13 @@ import {
 	setEmail,
 	setName,
 	userFetched,
+	initialState,
 } from './profile.ts';
 
 describe('profile reducer', () => {
 	it('should return the initial state', () => {
 		expect(profile(undefined, {})).toEqual({
-			name: '',
-			email: '',
-			loading: false,
-			hasError: false,
-			errorTxt: '',
-			authorized: false,
+			...initialState,
 		});
 	});
 
@@ -28,12 +24,8 @@ describe('profile reducer', () => {
 				type: profileFetching,
 			})
 		).toEqual({
-			name: '',
-			email: '',
+			...initialState,
 			loading: true,
-			hasError: false,
-			errorTxt: '',
-			authorized: false,
 		});
 	});
 
@@ -44,12 +36,10 @@ describe('profile reducer', () => {
 				payload: { user: { email: 'email', name: 'name' } },
 			})
 		).toEqual({
+			...initialState,
 			name: 'name',
 			email: 'email',
-			loading: false,
-			hasError: false,
 			authorized: true,
-			errorTxt: '',
 		});
 	});
 
@@ -59,12 +49,7 @@ describe('profile reducer', () => {
 				type: forgotFetched,
 			})
 		).toEqual({
-			name: '',
-			email: '',
-			loading: false,
-			hasError: false,
-			authorized: false,
-			errorTxt: '',
+			...initialState,
 		});
 	});
 
@@ -75,12 +60,33 @@ describe('profile reducer', () => {
 				payload: { message: 'some error' },
 			})
 		).toEqual({
-			name: '',
-			email: '',
-			loading: false,
+			...initialState,
 			hasError: true,
-			authorized: false,
 			errorTxt: 'some error',
+		});
+	});
+
+	it('should handle setEmail', () => {
+		expect(
+			profile(undefined, {
+				type: setEmail,
+				payload: 'email',
+			})
+		).toEqual({
+			...initialState,
+			email: 'email',
+		});
+	});
+
+	it('should handle setName', () => {
+		expect(
+			profile(undefined, {
+				type: setName,
+				payload: 'name',
+			})
+		).toEqual({
+			...initialState,
+			name: 'name',
 		});
 	});
 });

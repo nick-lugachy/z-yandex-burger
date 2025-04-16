@@ -12,7 +12,7 @@ const epLogout = 'auth/logout';
 const epUser = 'auth/user';
 const epReset = 'password-reset/reset';
 
-const initialState = {
+export const initialState = {
 	email: '',
 	name: '',
 	loading: false,

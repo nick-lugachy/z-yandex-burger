@@ -5,7 +5,7 @@ import { AppDispatch } from '../index';
 
 const ep = 'ingredients';
 
-const initialState = {
+export const initialState = {
 	data: [],
 	loading: false,
 	hasError: false,

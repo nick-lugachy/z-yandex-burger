@@ -1,44 +1,49 @@
 /// <reference types="cypress" />
 
+const url = 'http://localhost:8080/';
+const bunName = 'Краторная булка N-200i';
+const fillName = 'Филе Люминесцентного тетраодонтимформа';
+const sauseName = 'Соус с шипами Антарианского плоскоходца';
+
 describe('create burger test', () => {
 	it('try go to the site', () => {
-		cy.visit('http://localhost:8080/');
+		cy.visit(url);
 	});
 
-	it('drag-n-drop test', () => {
-		it('should dragndrop', () => {
-			cy.visit('http://localhost:8080/');
+	it('should dragndrop', () => {
+		cy.visit(url);
 
-			cy.get('img[alt="Краторная булка N-200i"]')
-				.drag('*[class^="burger-constructor-module__elementContainer"]')
-				.then((success) => {
-					assert.isTrue(success);
-				});
+		cy.get('img[alt="' + bunName + '"]').as('bunCard');
+		cy.get('img[alt="' + fillName + '"]').as('fillCard');
+		cy.get('img[alt="' + sauseName + '"]').as('sauseCard');
 
-			const dataTransfer = new DataTransfer();
-			cy.get('img[alt="Филе Люминесцентного тетраодонтимформа"]')
-				.drag('*[class^="burger-constructor-module__elementContainer"]')
-				.then((success) => {
-					assert.isTrue(success);
-				});
+		cy.get('*[class^="burger-constructor-module__elementContainer"]').as(
+			'costructor'
+		);
 
-			cy.get('img[alt="Соус с шипами Антарианского плоскоходца"]')
-				.drag('*[class^="burger-constructor-module__elementContainer"]')
-				.then((success) => {
-					assert.isTrue(success);
-				});
+		cy.get('@bunCard')
+			.drag('@costructor')
+			.then((success) => {
+				assert.isTrue(success);
+			});
 
-			cy.get('*[class^="burger-constructor-module__elementContainer"]')
-				.eq(0)
-				.should('contain', 'Краторная булка N-200i');
+		const dataTransfer = new DataTransfer();
+		cy.get('@fillCard')
+			.drag('@costructor')
+			.then((success) => {
+				assert.isTrue(success);
+			});
 
-			cy.get('*[class^="burger-constructor-module__elementContainer"]')
-				.eq(1)
-				.should('contain', 'Филе Люминесцентного тетраодонтимформа');
+		cy.get('@sauseCard')
+			.drag('@costructor')
+			.then((success) => {
+				assert.isTrue(success);
+			});
 
-			cy.get('*[class^="burger-constructor-module__elementContainer"]')
-				.eq(2)
-				.should('contain', 'Соус с шипами Антарианского плоскоходца');
-		});
+		cy.get('@costructor').eq(0).should('contain', bunName);
+
+		cy.get('@costructor').eq(1).should('contain', sauseName);
+
+		cy.get('@costructor').eq(2).should('contain', fillName);
 	});
 });
